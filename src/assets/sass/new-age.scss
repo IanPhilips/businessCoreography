@@ -6,12 +6,15 @@
 @import 'global.scss';
 @import 'navbar.scss';
 @import 'masthead.scss';
-@import 'download.scss';
+@import 'about.scss';
 @import 'features.scss';
+@import 'fails.scss';
 @import 'cta.scss';
 @import 'contact.scss';
 @import 'footer.scss';
 @import 'bootstrap-overrides.scss';
+@import "assessment.scss";
+@import "video.scss";
 
 @import './fontawesome/css/all.min.css';
 @import url('https://fonts.googleapis.com/css?family=Lato');

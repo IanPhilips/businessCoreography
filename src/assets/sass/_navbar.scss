@@ -3,11 +3,15 @@
     border-color: fade-out($gray-darker, .95);
     background-color: white;
     border-bottom: 5px solid $theme-secondary;
+    .brand-icon{
+        width:40px;
+        margin-right: 10px;
+    }
     @include transition-all;
     @include heading-font;
     .navbar-brand {
-        font-size:40px;
-        color: $theme-tertiary;
+        font-size:20px;
+        color: $theme-secondary;
         @include logo-font;
         &:hover,
         &:focus {

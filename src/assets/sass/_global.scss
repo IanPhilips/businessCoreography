@@ -22,7 +22,6 @@ a {
 
 hr {
     max-width: 250px;
-    //margin: 25px auto 0;
     border-width: 2px;
     border-color: $theme-secondary;
 }
@@ -38,43 +37,40 @@ h4,
 h5,
 h6 {
     @include heading-font;
-    font-weight: bold;
-}
-h5, h3{
-    font-weight:bold;
 }
 h1{
     font-size: 48px;
+    font-weight: bold;
+    text-transform: capitalize;
 }
 h2{
-    font-size: 36px;
-    color: $theme-tertiary;
+    font-size: 26px;
+    color: $theme-text;
     font-weight: bold;
+    text-transform: uppercase;
 }
 h3{
     font-size: 28px;
-    color: $theme-tertiary;
+    color: $theme-text;
+    font-weight: bold;
+    text-transform: capitalize;
 }
 h4{
-    font-size: 24px;
-    color: white;
+    @include body-font;
+
 }
 
 p {
-    font-size: 16px;
+    @include body-font;
+    font-size: 18px;
     line-height: 1.25;
     margin-bottom: 20px;
 }
 
 section {
-    padding: 100px 0;
-}
-.bg-gray{
-    background-color: rgb(245,245,245);
+    padding: 50px 0;
 }
 
-.bg-gray-slant {
-    background-color: rgb(245,245,245);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
+.section-heading{
+
 }

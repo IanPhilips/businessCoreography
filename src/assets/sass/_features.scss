@@ -1,10 +1,7 @@
 // Styling for the features section
 section.features {
     p{
-        line-height: 1.75em;
-    }
-    .bg-gray{
-        border-radius: 10px;
+        line-height: 1.5em;
     }
 
     @media (min-width: 992px) {
@@ -32,48 +29,22 @@ section.features {
         }
     }
 
-    .section-heading {
-        margin-bottom: 50px;
-        h2 {
-            margin-top: 0;
-            font-size: 40px;
-            font-weight: bold;
-        }
-        p {
-            margin-bottom: 0;
-        }
-    }
-    .device-container,
-    .feature-item {
-        max-width: 325px;
-        margin: 0 auto;
-    }
+
     .device-container {
-        margin-bottom: 100px;
+        margin-bottom: 10px;
         @media(min-width: 992px) {
             margin-bottom: 0;
         }
     }
+
     .feature-item {
-        padding-top: 50px;
-        padding-bottom: 50px;
+        //padding-top: 20px;
+        //padding-bottom: 20px;
+        padding:30px;
+        width:100%;
         text-align: center;
-        h3 {
-            font-size: 30px;
-        }
-        h5{
-            font-weight: bold;
-            margin-top: 20px;
-            font-size: 19px;
-        }
-        i {
-            font-size: 80px;
-            display: block;
-            margin-bottom: 15px;
-            background: -webkit-linear-gradient(to left, $theme-secondary, $theme-tertiary);
-            background: linear-gradient(to left, $theme-secondary, $theme-tertiary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    }
+    .card-image{
+        width:50px;
     }
 }

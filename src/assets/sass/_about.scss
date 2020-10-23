@@ -1,0 +1,16 @@
+// Styling for the download section
+section.about {
+  .about-item {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width:100%;
+    text-align: center;
+    border-width: 0;
+    border-color: transparent;
+    box-shadow: 0 0;
+  }
+  .about-image{
+    border-width: 2px;
+    border-color: $theme-primary;
+  }
+}

@@ -1,0 +1,65 @@
+// Styling for the fails section
+section.fails {
+    p{
+        line-height: 1.75em;
+    }
+
+    @media (min-width: 992px) {
+        .bg-left-bleed:before {
+            left: -2em;
+            background: rgb(245, 245, 245);
+            content: '';
+            display: block;
+            position: absolute;
+            width: 20em;
+            top: 0;
+            bottom: 0;
+            z-index: -1
+        }
+        .bg-right-bleed:before {
+            right: -2em;
+            background: rgb(245, 245, 245);
+            content: '';
+            display: block;
+            position: absolute;
+            width: 20em;
+            top: 0;
+            bottom: 0;
+            z-index: -1
+        }
+    }
+
+
+    .device-container {
+        margin-bottom: 100px;
+        @media(min-width: 992px) {
+            margin-bottom: 0;
+        }
+    }
+    .device-container,
+    .feature-item {
+        max-width: 325px;
+        margin: 0 auto;
+    }
+    .feature-item {
+        height:300px;
+        text-align: center;
+        box-shadow: -.4em -.4em 0 $theme-primary;
+        border-radius: 5px;
+        background-color: $theme-tertiary;
+    }
+    .card-image{
+        margin-top: 50px;
+        margin-left: 15px;
+        margin-right: 10px;
+        width: 90%;
+        height: 205px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .card-notes{
+        height:30px;
+        max-height: 30px;
+        margin-top: 50px;
+    }
+}

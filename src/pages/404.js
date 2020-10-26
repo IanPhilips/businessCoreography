@@ -12,12 +12,12 @@ const IndexPage = () => (
             404 Page not found
             <br />
             <Link className="btn btn-outline btn-xl" to="/">
-              Go back
+              Go home
             </Link>
           </h2>
         </div>
       </div>
-      <div className="overlay"></div>
+      {/*<div cla/!**!/ssName="overlay"></div>*/}
     </section>
 
     <Footer />

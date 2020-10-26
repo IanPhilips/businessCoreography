@@ -17,22 +17,36 @@ import metrics from "../assets/img/Metrics_icon.png"
 import score from "../assets/img/score_icon.png"
 import recommendation from "../assets/img/Recommendations_icon.png"
 
-import assessment from "../assets/images/BlurredDocument.png";
+import vote from "../assets/img/vote_icon.png"
+import video from "../assets/img/video_icon.png"
+
+import assessment from "../assets/images/assessment.png";
+
 import rachel from "../assets/images/Rachel Cossar.jpg";
 
-import vid from '../assets/videos/VPAssessment Intro.mp4';
+import hero from '../assets/videos/Hero_Video.mp4';
+
 
 import {
   MDBAnimation,
-  MDBBtn, MDBCard, MDBCardBody, MDBCardHeader,
+  MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
 } from 'mdbreact';
 import emailjs from 'emailjs-com';
 import Video from '../components/Video';
 
 class IndexPage extends Component{
 
+
+  modalTitles=["Vote Received", "Video Received", "Error"];
+  paymentStatusKey="PaymentStatus";
+
   state = {
-    radio: 1
+    radio: 1,
+    modal:true,
+    title:this.modalTitles[0],
+    message:"",
+    icon:video,
+    contactModal:false,
   }
 
   onRadioSelect = nr => () => {
@@ -53,7 +67,7 @@ class IndexPage extends Component{
               width:"100%",
               objectFit:"cover"
             }}>
-              <source src={vid} type={"video/mp4"}/>
+              <source src={hero} type={"video/mp4"}/>
             </video>
 
       <div  style={{
@@ -66,17 +80,17 @@ class IndexPage extends Component{
       }}>
       <div className="header-content mx-auto"
            style={{
-             marginTop:"20vh",
+             marginTop:"50vh",
            }}
            >
-        <h1 className={"text-left ml-5"} style={{maxWidth:"400px"}}>
+        <h1 className={"text-center "} style={{}}>
           Personalized Virtual Presence Assessment
         </h1>
-        <h4 className={"ml-5 text-left"} style={{maxWidth:"700px", marginTop:"30vh"}}>
-          IMPROVING HUMAN CONNECTION OVER VIDEO
-        </h4>
-        <div className={"text-left ml-5"}>
-          <MDBBtn href={"/contact"} >
+        <h5 className={"text-center text-white"} style={{marginTop:"1vh"}}>
+          Improving Human Connection Over Video
+        </h5>
+        <div className={"text-center  mt-5"}>
+          <MDBBtn href={"/contact"}  className={"btn-primary"}>
           GET MY ASSESSMENT
           </MDBBtn>
         </div>
@@ -197,7 +211,7 @@ class IndexPage extends Component{
     </section>
 
     {/*POLL*/}
-    <section className="cta m-5" id="cta">
+    <section className="cta my-5" id="cta">
       <div className="container">
         <div className="row ">
           <div className="col-lg-8 mx-auto my-auto">
@@ -275,7 +289,8 @@ class IndexPage extends Component{
                 {/*SUBMIT*/}
                 <div className={"text-center"}>
                   <input type="submit" value="VOTE NOW"
-                         className="btn-default btn text-white mt-5"
+                         onClick={()=>this.toggleModal(this.modalTitles[0])}
+                         className="btn-default btn btn-primary text-white mt-5"
                          style={{width:"300px"}}
                   />
                 </div>
@@ -302,7 +317,7 @@ class IndexPage extends Component{
           </div>
         </div>
 
-        <div className="row">
+        <div className="row equal">
           <Video/>
         </div>
 
@@ -321,12 +336,12 @@ class IndexPage extends Component{
 
         </MDBAnimation>
         <div className="row">
-          <div className="col-lg-4">
-            <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={"true"} >
-              <img src={assessment} alt={""} style={{width:"100%",  boxShadow:"8px 8px 5px lightgray"}}/>
+          <div className="col-lg-4 " style={{height:"70vh"}}>
+            <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={"true"} className={"my-auto"} >
+              <img src={assessment} alt={""} style={{width:"100%"}} />
             </MDBAnimation>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-8" style={{height:"70vh"}}>
             <div className="row ">
               <div className="col-lg-6 mb-5">
                 <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={"true"} className={"h-100"}>
@@ -401,7 +416,7 @@ class IndexPage extends Component{
 
         <div className="row m-5 p-5">
           <div className="col-lg-8">
-            <MDBAnimation type={"slideInRight"} duration={"1s"} reveal={"true"} >
+            <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={"true"} >
               <MDBCard className={"about-item text-center"}>
                 <h3> Body Language & Presence Expert </h3>
                 <MDBCardBody >
@@ -427,7 +442,7 @@ class IndexPage extends Component{
             </MDBAnimation>
           </div>
           <div className="col-lg-4">
-            <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={"true"} >
+            <MDBAnimation type={"slideInRight"} duration={"1s"} reveal={"true"} >
               <MDBCard className={"about-image text-center"}>
                 <img src={rachel} alt={""} style={{width:"100%",
                   padding:"10px"}}/>
@@ -447,7 +462,7 @@ class IndexPage extends Component{
           <p className={"m-0 text-right"}>Interested in more consistent feedback and coaching? </p>
         </div>
         <div className={"col-lg-4"}>
-          <MDBBtn href={"/contact"} className={"text-white mr-auto"}>
+          <MDBBtn onClick={()=>{this.toggleContact()}} className={"text-white mr-auto btn-primary"}>
             Let us know
           </MDBBtn>
         </div>
@@ -458,12 +473,64 @@ class IndexPage extends Component{
     <section className="contact bg-secondary" id="contactline" style={{padding:"2px"}}>
     </section>
 
+    <MDBContainer>
+      <MDBModal isOpen={this.state.modal} toggle={()=>this.toggleModal()} contentClassName={"bg-gray"}>
+        <h5 className={"m-3 text-center"}> {this.state.title}</h5>
+        <MDBModalBody className={"m-3 text-center"}>
+          <p className={"mb-3"}>{this.state.message}</p>
+          <br/>
+          <img src={this.state.icon} alt={"bad lighting"} width={"40px"} />
+
+        </MDBModalBody>
+        <MDBModalFooter className={"align-content-center justify-content-center "}>
+          <MDBBtn className={"mt-3 text-white btn-primary"}  onClick={()=>this.toggleModal()}>Close</MDBBtn>
+        </MDBModalFooter>
+      </MDBModal>
+    </MDBContainer>
+
+    <MDBContainer>
+      <MDBModal isOpen={this.state.contactModal} toggle={()=>this.toggleContact()} contentClassName={"bg-gray"}>
+        <h5 className={"m-4 text-center"}> Thanks!  We'll be in touch.</h5>
+        <MDBModalFooter className={"align-content-center justify-content-center "}>
+          <MDBBtn className={"mt-3 text-white btn-primary"}  onClick={()=>this.toggleContact()}>Close</MDBBtn>
+        </MDBModalFooter>
+      </MDBModal>
+    </MDBContainer>
 
     <Footer />
   </Layout>
 
 );
 }
+  toggleModal(title){
+    let params = (new URL(this.props.location.href)).searchParams;
+    let status = params.get(this.paymentStatusKey);
+    let icon = vote;
+    let message = "Elevating your virtual presence will help solve this challenge. Continue on to take your assessment.";
+    if (status==="fail"){
+      message="Oops! The payment didn't go through";
+      icon=video;
+      title = this.modalTitles[2]
+    }
+    else if (status==="success"){
+      message="Thank you for your submission - You will receive your tailored virtual presence assessment within 24 hours.";
+      icon=video;
+      title = this.modalTitles[1]
+    }
+    this.setState({
+      modal: !this.state.modal,
+      title:title,
+      message:message,
+      icon:icon,
+    });
+  }
+
+  toggleContact(){
+    this.setState({
+      contactModal: !this.state.contactModal
+    });
+  }
+
   sendEmail(e) {
     e.preventDefault();
     console.log("email sent")

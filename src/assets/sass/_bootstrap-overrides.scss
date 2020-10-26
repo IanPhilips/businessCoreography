@@ -29,28 +29,38 @@
 }
 
 .btn-outline {
-    color: white;
+    color: $theme-primary;
+    background-color:white !important;
     border: 1px solid;
-    border-color: white;
+    border-color: $theme-primary;
     &:hover,
     &:focus,
     &:active,
     &.active {
-        color: white;
-        border-color: $theme-primary;
-        background-color: $theme-primary;
+        color: $theme-secondary;
+        border-color: $theme-secondary;
+        background-color:white !important;
     }
 }
-.btn-default {
+.gray{
+    border-color: $theme-text;
+    color: $theme-text ;
+}
+
+.btn-primary {
     &:hover,
     &:focus,
     &:active,
     &.active {
         background: $theme-secondary !important;
+        border-color: $theme-secondary;
+
     }
 }
-.btn-default{
-    background-color: $theme-primary!important;
+.btn-primary{
+    background-color: $theme-primary !important;
+    border-color: $theme-primary;
+
 }
 
 .btn {

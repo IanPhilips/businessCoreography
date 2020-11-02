@@ -8,21 +8,24 @@ export default function Footer() {
       <div className="container text-left">
         <br/> <br/>
 
-      <div className="row">
+      <div className="row ">
         <div className={"col-lg-6"}>
           <div className="row">
 
-          <h4 className={"mb-4 ml-2"}> Choreography for Business </h4>
+          <h4 className={"mb-4 ml-2 text-white"}> Choreography for Business </h4>
           <br/> <br/>
           <div className={"col-lg-6"}>
             <p>
-              VIRTUAL
+              <a  href={"https://choreographyforbusiness.com/cfbprograms"}>PROGRAMS</a>
               <br/>
               <br/>
-              PROGRAMS
+              <a href={"https://choreographyforbusiness.com/events"}>EVENTS</a>
               <br/>
               <br/>
-              VIDEOS
+              <a href={"https://choreographyforbusiness.com/media"}>MEDIA</a>
+              <br/>
+              <br/>
+              <a href={"https://choreographyforbusiness.com/aboutcfb"}>ABOUT</a>
             </p>
             </div>
             <div className={"col-lg-6"}>
@@ -41,7 +44,7 @@ export default function Footer() {
         <div className={"col-lg-6 text-center"}>
           <div className="row">
           <div className={"col-lg-6"}>
-            <h4> When You Can't Meet In Person </h4>
+            <h4 className={"text-white"}> When You Can't Meet In Person </h4>
             <br/>
             <p className={"text-center"}>
               The tools and techniques outlined in this eBook will allow you to
@@ -50,8 +53,8 @@ export default function Footer() {
             </p>
           <br/>
           <br/>
-          <h4>
-          DOWNLOAD YOUR COPY
+          <h4 style={{fontSize:"16px"}} className={"text-white"}>
+            <a href={"https://choreographyforbusiness.com/ebook"}> DOWNLOAD YOUR COPY</a>
           </h4>
           </div>
           <div className={"col-lg-6"}>
@@ -64,7 +67,7 @@ export default function Footer() {
       </div>
 
 
-        <p> &copy; {config.siteTitle} 2020. All Rights Reserved. </p>
+        <p className={"basker"} > &copy; {config.siteTitle} 2020. All Rights Reserved. </p>
 
       </div>
     </footer>

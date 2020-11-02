@@ -2,12 +2,20 @@
 footer {
     padding: 50px 0;
     text-align: center;
-    color: white;
     background-color: $theme-text;
     p {
         font-size: 14px;
         line-height: 20px;
         margin: 0;
+        color: white !important;
     }
-
+    .basker{
+        @include heading-font
+    }
+    a{
+        color: white !important;
+    }
+    img{
+        max-width: 400px;
+    }
 }

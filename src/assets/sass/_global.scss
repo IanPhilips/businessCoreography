@@ -7,17 +7,14 @@ body {
 
 body {
     @include body-font;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 
+
 a {
-    color: $theme-primary;
     @include transition-all;
-    &:hover,
-    &:focus {
-        color: darken($theme-primary, 10%);
-    }
+
 }
 
 hr {
@@ -39,30 +36,41 @@ h6 {
     @include heading-font;
 }
 h1{
-    font-size: 48px;
+    font-size: 36px;
     font-weight: bold;
     text-transform: capitalize;
 }
 h2{
     font-size: 26px;
     color: $theme-text;
-    font-weight: bold;
+    font-weight: normal;
     text-transform: uppercase;
 }
 h3{
-    font-size: 28px;
+    font-size: 24px;
     color: $theme-text;
-    font-weight: bold;
+    font-weight: normal;
     text-transform: capitalize;
 }
 h4{
     @include body-font;
-
+}
+h5{
+    font-size: 22px;
+    color: $theme-text;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+h6{
+    @include body-font;
+    font-size: 22px;
+    background-color: lightgray;
+    border-radius: 5px;
 }
 
 p {
     @include body-font;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.25;
     margin-bottom: 20px;
 }

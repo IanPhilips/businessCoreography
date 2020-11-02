@@ -1,5 +1,8 @@
 // Styling for the features section
 section.video {
+    h3{
+        font-weight: bold;
+    }
 
     .device-container {
         margin-bottom: 10px;
@@ -23,7 +26,7 @@ section.video {
         border-radius: 5px;
         width:100%;
         height:100%;
-        max-height: 100vh;
+        min-height: 650px;
         background-color: $theme-tertiary;
         padding: 20px;
     }
@@ -36,9 +39,9 @@ section.video {
         margin-top:20px;
         margin-bottom: 20px;
     }
-    video{
+    .intro-video{
         height:100%;
-        width:500px;
+        width:700px;
         object-fit:cover;
     }
     .video-curtain{
@@ -50,6 +53,7 @@ section.video {
         position: absolute;
         z-index: 1;
         left:-50vw;
+
     }
     .curtain{
         max-width: 90%;
@@ -61,5 +65,40 @@ section.video {
         z-index: 1;
         left:74vw;
         transform: scaleX(-1);
+
     }
+
+    @media screen and (max-width: 1000px) {
+        .curtain-right {
+            display: none
+        }
+        .curtain-left {
+            display: none
+        }
+    }
+    .buttons button{
+        @extend .btn;
+        text-transform: uppercase !important;
+        padding:10px;
+        color:white;
+        margin: 20px;
+        //box-shadow: transparent;
+    }
+    .buttons .submit {
+        display: none !important;
+    }
+    .videomail{
+        min-width:640px;
+    }
+    .countdown{
+        opacity: 1;
+        color:black;
+        text-shadow: 0 0 100px #fff;
+    }
+    .pausedHeader{
+        opacity: 1;
+        color:black;
+        text-shadow: 0 0 100px #fff;
+    }
+
 }

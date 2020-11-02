@@ -76,6 +76,7 @@
 
 @mixin body-font {
     font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
+    color:$theme-text;
 }
 
 @mixin alt-font {

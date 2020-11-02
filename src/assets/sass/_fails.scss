@@ -2,6 +2,7 @@
 section.fails {
     p{
         line-height: 1.75em;
+        margin:20px
     }
 
     @media (min-width: 992px) {
@@ -47,6 +48,9 @@ section.fails {
         box-shadow: -.4em -.4em 0 $theme-primary;
         border-radius: 5px;
         background-color: $theme-tertiary;
+        h5{
+            margin-top: 20px;
+        }
     }
     .card-image{
         margin-top: 50px;
@@ -60,6 +64,6 @@ section.fails {
     .card-notes{
         height:30px;
         max-height: 30px;
-        margin-top: 50px;
+        margin-top: 20px;
     }
 }

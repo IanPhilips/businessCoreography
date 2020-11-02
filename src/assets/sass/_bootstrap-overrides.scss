@@ -15,8 +15,6 @@
     background: $theme-tertiary !important;;
     //background: -webkit-linear-gradient($theme-tertiary, darken($theme-tertiary, 5%));
     //background: linear-gradient($theme-tertiary, darken($theme-tertiary, 5%));
-
-
 }
 
 .text-primary {
@@ -27,6 +25,31 @@
     padding-right: 0;
     padding-left: 0;
 }
+.btn-xl{
+    width:280px;
+}
+
+.btn {
+    background-color: $theme-primary !important;
+    //color:$theme-primary-contrast;
+    font-size: 14pt !important;
+    border-radius: 7px;
+    padding: 12px 35px 9px 35px;
+    height: 52px;
+    @include alt-font;
+    font-weight: bold !important;
+    min-width: 204px;
+}
+.btn {
+    &:hover,
+    &:focus,
+    &:active,
+    &.active, {
+        background-color: $theme-selection !important;
+        border-color: $theme-selection;
+    }
+}
+
 
 .btn-outline {
     color: $theme-primary;
@@ -37,40 +60,18 @@
     &:focus,
     &:active,
     &.active {
-        color: $theme-secondary;
-        border-color: $theme-secondary;
+        color: $theme-selection;
+        border-color: $theme-selection;
         background-color:white !important;
     }
 }
+
 .gray{
-    border-color: $theme-text;
-    color: $theme-text ;
+    border-color: transparent  !important;
+    color: $theme-gray !important;
+    box-shadow: transparent;
 }
 
-.btn-primary {
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-        background: $theme-secondary !important;
-        border-color: $theme-secondary;
-
-    }
+.not-too-wide{
+    max-width: 1400px;
 }
-.btn-primary{
-    background-color: $theme-primary !important;
-    border-color: $theme-primary;
-
-}
-
-.btn {
-    //color:$theme-primary-contrast;
-    font-size: 16pt !important;
-    border-radius: 7px;
-    padding: 11px 35px 8px 35px;
-    height: 52px;
-    @include alt-font;
-    font-weight: bold !important;
-    min-width: 204px;
-}
-

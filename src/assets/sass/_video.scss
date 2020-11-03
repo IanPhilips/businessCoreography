@@ -39,9 +39,12 @@ section.video {
         margin-top:20px;
         margin-bottom: 20px;
     }
+    .btn-xl{
+        min-width: 280px;
+    }
     .intro-video{
         height:100%;
-        width:700px;
+        width:100%;
         object-fit:cover;
     }
     .video-curtain{
@@ -89,6 +92,12 @@ section.video {
     }
     .videomail{
         min-width:640px;
+        @media(max-width: 700px) {
+            min-width:426px;
+        }
+        display: grid;
+        align-content: center;
+        justify-content: center;
     }
     .countdown{
         opacity: 1;

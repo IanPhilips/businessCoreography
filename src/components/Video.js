@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { MDBAnimation, MDBCard } from 'mdbreact';
-import dollars from '../assets/images/29dollars.png';
+import { Helmet } from "react-helmet"
+import { loadStripe } from '@stripe/stripe-js/pure';
+import addToMailchimp from 'gatsby-plugin-mailchimp';
+import emailjs from 'emailjs-com';
+
+import dollars from '../assets/images/150dollars.png';
 import hours from '../assets/images/24HOURS.png';
 import vid from '../assets/videos/intro-vp-asessment.mp4';
 import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
-import { Helmet } from "react-helmet"
-import { loadStripe } from '@stripe/stripe-js/pure';
-import addToMailchimp from 'gatsby-plugin-mailchimp';
+import config from '../../config';
 
-const url="https://a9ff83965c76.ngrok.io";
-const stripePromise = loadStripe('pk_test_51H0C4qF6ssRQC0xGIM11rZZXv7p1kMPWBQ0Lrc9TUjszV1l9Wj5E9Gzez1Luva9ceKF6HzGbZDJQFewe1dNsUjzX00STSIxSk1');
+const url="https://acb562461369.ngrok.io";
 let price = "";
+let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
+const emailjsVPARequestID="template_d3wtbo1";
 
 export default class Video extends Component {
 
@@ -22,29 +26,62 @@ export default class Video extends Component {
     email:"",
     name:"",
     waitlist:false,
+    videomailURL:null,
   };
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.onVideomailSubmitted = this.onVideomailSubmitted.bind(this);
+    this.redirectToStripe = this.redirectToStripe.bind(this);
+    this.sendEmailJS = this.sendEmailJS.bind(this);
     this.handleFormSubmissionExtras = this.handleFormSubmissionExtras.bind(this);
   }
+
+  // changes to state
   handleChange(event) {
     const name = event.target["name"];
     this.setState({[name]: event.target.value});
   }
 
 
-  componentDidMount() {
+  engageTestModeAndSetPrice(testKey){
     price = this.props.price;
+    if (testKey!==null){
+      stripePromise = loadStripe(testKey);
+    }
+  }
+
+  componentDidMount() {
+    this.engageTestModeAndSetPrice(this.props.testMode);
+    let width=640, height=480;
+    if (window.innerWidth<700){
+      width=426; height=240;
+    }
+
     (async() => {
       console.log("waiting for videomail client library");
       while(window.VideomailClient === undefined) // define the condition as you like
         await new Promise(resolve => setTimeout(resolve, 500));
       const videomailClient = new window.VideomailClient({        // instantiate with some options
         verbose:       true,
-        video:{width:640, height: 480, fps:20, limitSeconds:60},
-        audio:{enabled:true}
+        video:{width:width, height: height, fps:20, limitSeconds:60},
+        audio:{enabled:true},
+        selectors:{
+          formId:'videoSubmission',
+        },
+        defaults:{
+          from:"videomail@virtualcfb.com",
+          subject:"New Virtual Submission",
+        },
+        siteName:"videomail-client-demo"
       });
+
+
+      videomailClient.on(
+        videomailClient.events.SUBMITTED,
+        this.onVideomailSubmitted.bind(videomailClient)
+      )
 
       this.setState({
         videomailClient:videomailClient
@@ -54,14 +91,14 @@ export default class Video extends Component {
 
 
 
-
+  // INTRO
   stepZero(){
     return(
-      <div className={"row justify-content-center align-content-center"}>
-        <div className={"col-lg-3"}>
+      <div className={"row d-flex justify-content-center align-content-center"}>
+        <div className={"col-3"}>
           <img src={dollars} alt={""} className={"img-fluid mb-5"}/>
         </div>
-        <div className={"col-lg-6 text-center"}>
+        <div className={"col-6 text-center "}>
           <h3 className={"mt-5"}> How This Works</h3>
           <br/>
           <br/>
@@ -76,66 +113,73 @@ export default class Video extends Component {
           </h5>
           <br/><br/><br/>
 
-          <a onClick={()=>this.setState({stage:1})}
-                  className={"text-white btn mt-5 btn-xl  mx-auto" }  >
+          <div className={"d-flex justify-content-center align-content-center"}>
+          <button onClick={()=>this.setState({stage:1})}
+                  className={"text-white btn mt-5 btn-xl mx-auto" }>
+
             AGREE & BEGIN
-          </a>
+          </button>
+          </div>
+
           <br/><br/><br/>
-          <b style={{cursor:"pointer"}} onClick={()=>this.props.cb()} className={"mt-5"}>Terms & Conditions</b>
+          <b style={{cursor:"pointer"}} onClick={()=>this.props.toggleParentModal("Terms & Conditions")} className={"mt-5"}>Terms & Conditions</b>
           <p style={{fontSize:"14px", color:"#818181"}}>
             Your video and data are private and will not be shared with any third parties.
           </p>
         </div>
-        <div className={"col-lg-3"}>
+        <div className={"col-3"}>
           <img src={hours} alt={""}  className={"img-fluid mb-5"}/>
         </div>
       </div>
     )
   }
 
+  // INTRO VIDEO AND TOPIC OPTIONS
   stepOne(){
     return(
-      <div className={"row"}>
+      <div className={"row text-center"}>
         <div className={"col-lg-12 text-left "}>
-          <a className={"btn btn-outline  gray "} onClick={()=>this.setState({stage:0})}>
+          <button className={"btn btn-outline  gray "} onClick={()=>this.setState({stage:0})}>
             GO BACK
-          </a>
+          </button>
         </div>
-        <div className={"col-lg-12"}>
+        <div className={"col-12 img-fluid"}>
           <video autoPlay={"autoplay"} controls={true} className={"intro-video img-fluid "} src={vid} />
         </div>
         <div className={"col-12 col-md-6 col-xl-4 "}>
-          <a  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Sports / Activities" })}>
+          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Sports / Activities" })}>
             Sport / ACTIVITY
-          </a>
+          </button>
         </div>
         <div className={"col-12 col-md-6 col-xl-4 "}>
-          <a  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Elevator Pitch" })}>
+          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Elevator Pitch" })}>
             ELEVATOR PITCH
-          </a>
+          </button>
         </div>
         <div className={"col-12 col-md-6 col-xl-4 "}>
-          <a  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Mmm, Breakfast" })}>
+          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Mmm, Breakfast" })}>
             MMM, BREAKFAST
-          </a>
+          </button>
         </div>
       </div>
     )
   }
 
+  // RECORDING
   stepTwo(){
     return(
       <div className={"row"}>
           <div className={"col-lg-12 text-right"}>
-            <a  className={"text-white btn"} onClick={()=>this.setState({stage:this.state.stage+1 })}>
+            <button  className={"text-white btn"} onClick={()=>this.setState({stage:this.state.stage+1 })}>
               CONTINUE
-            </a>
+            </button>
         </div>
       </div>
 
     )
   }
 
+  // CHECKOUT
   stepThree(){
     return(
       <div className={"row"}>
@@ -149,7 +193,6 @@ export default class Video extends Component {
               Please complete the below fields to receive your Personalized Assessment. Your Assessment will be sent to the provided email within 24 hours.
             </p>
 
-            <form className="contact-form text-right" onSubmit={this.redirectToStripe}>
               {/*NAME*/}
               <div className={"row"}>
                 <label htmlFor={"name"} className={"col-2 col-lg-3 m-3 mt-4"}> Name </label>
@@ -170,12 +213,15 @@ export default class Video extends Component {
                        style={{borderRadius:"5px", borderWidth:"1.5px"}}/>
                 <div className={"col-lg-2"}/>
               </div>
+
+
               {/*BETA*/}
               <div className={"row my-2"}>
                 <label htmlFor={"beta"} className={"ml-5 mt-3"}>Interested in more consistent feedback and coaching?  </label>
                 <div className={"row ml-5 col-12 text-left mt-3 mr-2 "}>
                   <input type="checkbox" style={{width:"30px", height:"30px", marginTop:"0px"}}
-                         id="waitlist" name="waitlist" checked={this.state.waitlist} onChange={()=>this.setState({"waitlist":!this.state.waitlist})}
+                         id="waitlist" name="waitlist" checked={this.state.waitlist}
+                         onChange={()=>this.setState({"waitlist":!this.state.waitlist})}
                   />
                   <p className={"my-1 ml-2"}> Add me to your Virtual Sapiens waitlist!</p>
                 </div>
@@ -190,17 +236,17 @@ export default class Video extends Component {
               </p>
               {/*SUBMIT*/}
               <div className={"col-lg-12 text-center"}>
-                  <a className={"btn btn-outline  gray"}
+                  <button className={"btn btn-outline  gray"}
                       onClick={()=>this.setState({stage:this.state.stage-1})}>
                     GO BACK
-                  </a>
+                  </button>
                 <input type="submit"  value="Checkout"
                        className="text-white mt-3 btn"
                        style={{width:"200px"}}
                        onClick={this.handleFormSubmissionExtras}
                 />
               </div>
-            </form>
+
           </div>
         </MDBAnimation>
         </div>
@@ -208,34 +254,68 @@ export default class Video extends Component {
     )
   }
 
-  handleFormSubmissionExtras(){
+
+  onVideomailSubmitted(videomail) {
+    console.log("On submit videomail", videomail);
+    this.setState({videomailURL:videomail.url},
+      ()=>{this.sendEmailJS()}
+      );
+  }
+
+  async handleFormSubmissionExtras(){
+    let mailchimpResponse = {"result":null};
     if (this.state.waitlist){
-      this.signUpEmail(this.state.name, this.state.email)
+      mailchimpResponse = await this.signUpEmail(this.state.name, this.state.email)
+    }
+    console.log("mailchimp response is:", mailchimpResponse["result"]);
+
+    if (mailchimpResponse["result"]==="error"){
+      this.props.toggleParentModal("Error", mailchimpResponse["msg"])
+    }
+    else{
+      this.state.videomailClient.submit();
     }
   }
 
-  // TODO: sometimes it doesn't read price!!
-  async redirectToStripe (e)  {
-    e.preventDefault();
+  sendEmailJS() {
+    console.log("email sent");
+    emailjs.send(config.emailjsServiceID,
+      emailjsVPARequestID,
+      {
+        name:this.state.name,
+        email:this.state.email,
+        videomail_url: this.state.videomailURL
+      },
+      config.emailjsUserID)
+      .then((result) => {
+        console.log(result.text);
+        this.redirectToStripe();
+      }, (error) => {
+        console.log("EMAILJS ERROR:",error.text);
+        this.props.toggleParentModal("Error", error.text)
+      });
+  }
 
-    // console.log("doing stripe!", price);
+   async redirectToStripe ()  {
+    console.log("doing stripe!", price);
+    console.log("test mode?", this.props.testMode);
 
 
-    // // When the customer clicks on the button, redirect them to Checkout.
-    // const stripe = await stripePromise;
-    // const { error } = await stripe.redirectToCheckout({
-    //   lineItems: [{
-    //     price: price,
-    //     quantity: 1,
-    //   }],
-    //   mode: 'payment',
-    //   successUrl: url+'?PaymentStatus=success',
-    //   cancelUrl: url+'?PaymentStatus=fail',
-    // });
-    // console.log("stripe error",error);
-    // // If `redirectToCheckout` fails due to a browser or network
-    // // error, display the localized error message to your customer
-    // // using `error.message`.
+    // When the customer clicks on the button, redirect them to Checkout.
+    const stripe = await stripePromise;
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{
+        price: price,
+        quantity: 1,
+      }],
+      mode: 'payment',
+      successUrl: url+'?PaymentStatus=success',
+      cancelUrl: url+'?PaymentStatus=fail',
+    });
+    console.log("stripe error",error);
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `error.message`.
   };
 
 
@@ -262,21 +342,29 @@ export default class Video extends Component {
       this.state.videomailClient.hide();
     }
     return(
-      <div className={"row"}>
+      <div className={"row d-flex justify-content-center  "}>
         {this.state.stage===2 ?
-        <div className={"col-lg-12 text-left "}>
-          <a className={"btn btn-outline  gray"} onClick={()=>this.setState({stage:1})}>
+        <div className={"col-12 text-center "}>
+          <div className={"col-12 text-left "}>
+          <button className={"btn btn-outline  gray"} onClick={()=>this.setState({stage:1})}>
             GO BACK
-          </a>
+          </button>
+          <div className={"col-12 text-center "}>
+            <h2>{this.state.topic}</h2>
+          </div>
+          </div>
+
         </div>
+
           :
           <div/>
         }
-        <div className={"col-lg-8 text-center mx-auto videomail"}>
+        <div className={"videomail d-flex align-content-center "}>
           {this.state.videomailClient!=null ?
-            <div className={"videomail mx-auto"}
+            <div className={"videomail text-center "}
                  style={
                    this.state.stage!==2 ? {display:"none"} : {}
+
                  }
                  id="videomail"> </div>
             : <div/> }
@@ -285,7 +373,7 @@ export default class Video extends Component {
     )
   }
 
-  signUpEmail(name, email){
+  async signUpEmail(name, email){
     let fullName = name.split(' '),
       firstName = fullName[0],
       lastName = fullName[fullName.length - 1];
@@ -293,11 +381,9 @@ export default class Video extends Component {
       lastName = "";
     }
 
-   addToMailchimp(email, {FNAME:firstName, LNAME: lastName})
+   return addToMailchimp(email, {FNAME:firstName, LNAME: lastName})
      .then(data => {
-        // I recommend setting data to React state
-        // but you can do whatever you want (including ignoring this `then()` altogether)
-        console.log(data)
+       return data;
       })
       .catch(() => {
         // unnecessary because Mailchimp only ever
@@ -329,14 +415,22 @@ export default class Video extends Component {
         </div>
 
         <MDBCard className={"video-card text-center"}>
+          <form className="contact-form text-right" id={"videoSubmission"}
+                // onSubmit={this.redirectToStripe}
+                onSubmit={this.stopDefault}
+            >
+
           {this.conditionallyRenderVideoMail()}
           {this.returnStage()}
+          </form>
         </MDBCard>
-
-
       </div>
 
 
     )
+
+  }
+  stopDefault(e){
+    e.preventDefault();
   }
 }

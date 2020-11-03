@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-
+import ReactHtmlParser from 'react-html-parser';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { AnchorLink } from "gatsby-plugin-anchor-links";
+import {
+  MDBAnimation, MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
+} from 'mdbreact';
+import emailjs from 'emailjs-com';
+import Video from '../components/Video';
 
+import config from '../../config';
 import badLighting from "../assets/images/Bad lighting.png";
 import tooClose from "../assets/images/Lens too close.png";
 import tooHigh from "../assets/images/Lens too high.png";
-
 import colleagues from "../assets/img/colleagues_icon.png";
 import hands from "../assets/img/trust_icon.png";
 import target from "../assets/img/target_icon.png";
@@ -17,48 +22,53 @@ import summary from "../assets/img/summary_icon.png"
 import metrics from "../assets/img/Metrics_icon.png"
 import score from "../assets/img/score_icon.png"
 import recommendation from "../assets/img/Recommendations_icon.png"
-
 import vote from "../assets/img/vote_icon.png"
 import video from "../assets/img/video_icon.png"
-
 import assessment from "../assets/images/assessment.png";
-
 import rachel from "../assets/images/Rachel Cossar.jpg";
-
 import hero from '../assets/videos/Hero_Video.mp4';
 
-
-import {
-  MDBAnimation, MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
-} from 'mdbreact';
-// import emailjs from 'emailjs-com';
-import Video from '../components/Video';
+const emailjsContactPollID="template_ddrgc9o";
 
 class IndexPage extends Component{
-
 
   modalTitles=["Vote Received", "Video Received", "Error", "Terms & Conditions"];
   paymentStatusKey="PaymentStatus";
   priceCode="id";
+  testModeCode="key";
+  defaultPrice='price_1HhFwwF6ssRQC0xGlnkilU8r';
+
 
   state = {
     radio: 1,
     modal:false,
+    modalSize:"sm",
     title:this.modalTitles[0],
     message:"",
     icon:video,
     contactModal:false,
-    price:null
+    price:null,
+    testMode:null
   };
+
+  constructor(props) {
+    super(props);
+    this.toggleModal = this.toggleModal.bind(this);
+  }
 
   componentDidMount() {
     let params = (new URL(this.props.location.href)).searchParams;
+    // PARSE PRICE
     let price = params.get(this.priceCode);
     if (price===null){
-      price='price_1HhhN7F6ssRQC0xGg0Fp4If1';
+      price=this.defaultPrice;
     }
+    // can be null
+    let testMode = params.get(this.testModeCode);
+
     this.setState({
-      price:price
+      price:price,
+      testMode:testMode
     });
 
     let status = params.get(this.paymentStatusKey);
@@ -342,7 +352,10 @@ class IndexPage extends Component{
 
         <div className="row equal">
           {this.state.price
-            ? <Video cb={()=>this.toggleModal(this.modalTitles[3])} price={this.state.price}/>
+            ? <Video toggleParentModal={this.toggleModal}
+                     price={this.state.price}
+                     testMode={this.state.testMode}
+            />
             : <div/>
           }
         </div>
@@ -487,9 +500,9 @@ class IndexPage extends Component{
           <b className={"my-auto mr-4"}>Interested in more consistent feedback and coaching? </b>
         {/*</div>*/}
         {/*<div className={"col-lg-6"}>*/}
-          <a onClick={()=>{this.toggleContact()}} className={"text-white btn "}>
+          <button onClick={()=>{this.toggleContact()}} className={"text-white btn "}>
             Let us know
-          </a>
+          </button>
         {/*</div>*/}
       </div>
       </MDBAnimation>
@@ -500,16 +513,21 @@ class IndexPage extends Component{
 
     {/*STATUS MODAL*/}
     <MDBContainer>
-      <MDBModal isOpen={this.state.modal} toggle={()=>this.toggleModal()} contentClassName={"bg-gray"}>
+      <MDBModal
+        isOpen={this.state.modal}
+        toggle={()=>this.toggleModal()}
+        contentClassName={"bg-gray"}
+        size={this.state.modalSize}
+      >
         <h5 className={"m-3 text-center"}> {this.state.title}</h5>
         <MDBModalBody className={"m-3 text-center"}>
-          <p className={"mb-3"}>{this.state.message}</p>
+          <div className={"mb-3"}> { ReactHtmlParser (this.state.message) } </div>
           <br/>
           <img src={this.state.icon} alt={"bad lighting"} width={"40px"} />
 
         </MDBModalBody>
         <MDBModalFooter className={"align-content-center justify-content-center "}>
-          <a className={"mt-3 text-white btn"}  onClick={()=>this.toggleModal()}>Close</a>
+          <button className={"mt-3 text-white btn"}  onClick={()=>this.toggleModal()}>Close</button>
         </MDBModalFooter>
       </MDBModal>
     </MDBContainer>
@@ -537,21 +555,21 @@ class IndexPage extends Component{
                   {/*NAME*/}
                   <div className={"row"}>
                     <label htmlFor={"name"} className={"col-2 m-3 mt-4"}> Full Name </label>
-                    <input className={"mt-3 col-8 ml-2"} type="text" id={"name"}
+                    <input className={"mt-3 col-8 ml-3"} type="text" id={"name"}
                            placeholder={"First Last"} name="name"/>
                     <div className={"col-lg-2"}/>
                   </div>
                   {/*EMAIL*/}
                   <div className={"row"}>
                     <label htmlFor={"email"} className={"col-2  m-3 mt-4"}> Email </label>
-                    <input className={"mt-3 col-8 ml-2"} type="email" id={"email"}
+                    <input className={"mt-3 col-8 ml-3"} type="email" id={"email"}
                            placeholder={"Email@email.com"} name="email"/>
                     <div className={"col-lg-2"}/>
                   </div>
                   {/*MESSAGE*/}
                   <div className={"row"}>
                     <label htmlFor={"message"} className={"col-2 m-3 my-1"}> Message </label>
-                    <textarea className={"mt-3  col-8 ml-2 contact-text "} rows={"4"} cols={"50"}
+                    <textarea className={"mt-3  col-8 ml-3 contact-text "} rows={"4"} cols={"50"}
                               placeholder={"What can we help you with? (optional)"}
                               name="message" id={"message"} style={{borderRadius:"2px", borderWidth:"1px"}}
                     />
@@ -598,34 +616,26 @@ class IndexPage extends Component{
                       <input type="checkbox" name="Facial expressions" value="Facial expressions" id={"Facial expressions"}/>
                       <p className={"my-1 ml-2 text-left"}>Facial expressions</p>
                       </div>
-                      <div className={"col-6 col-sm-8 form-check-inline"}>
-                        <div className={"row"}>
-                          <div className={"col-2 "}>
-                              <input type="checkbox" name="Other" value="Other" id={"Other"}/>
-                          </div>
-                        <div className={"row"}>
-                          <div className={"col-2"}>
-                          <label htmlFor={"OtherMessage"} className={" my-1"}> Other </label>
-                          </div>
-                          <div className={"col-10 "}>
-                              <input className={""} type="text" id={"OtherMessage"}
-                                   placeholder={"I'd really like to..."} name="OtherMessage"
-                                   style={{  maxWidth:"500px", width:"100%",
-                                     maxHeight:"50px"}}/>
-                        </div>
-                        </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
+                    <div className={"row"}>
+                      <div className={"col-12 ml-4 form-check-inline"}>
+                        <input type="checkbox" name="Other" value="Other" id={"Other"}/>
+                        <label htmlFor={"OtherMessage"} className={" my-1 m-2 text-left"}> Other </label>
+                        <input className={""} type="text" id={"OtherMessage"}
+                               placeholder={"I'd really like to..."} name="OtherMessage"
+                               style={{  maxWidth:"500px", width:"100%",
+                                 maxHeight:"50px"}}/>
+                      </div>
+                    </div>
                   </div>
 
                   {/*SUBMIT*/}
                   <div className={"col-lg-12 text-right mt-5"}>
-                    <a className={"btn btn-outline gray "}
+                    <button className={"btn btn-outline gray "}
                             onClick={()=>this.toggleContact()}>
                       Cancel
-                    </a>
+                    </button>
                     <input type="submit" onClick={ ()=>this.toggleContact()} value="submit"
                            className=" btn text-white "
                            style={{width:"200px"}}
@@ -645,33 +655,49 @@ class IndexPage extends Component{
   </Layout>
 
 );
-}
-  toggleModal(title){
-    let message = "Elevating your virtual presence will help solve this challenge. Continue on to take your assessment.";
+
+  }
+
+  defaultMessage="Elevating your virtual presence will help solve this challenge. Continue on to take your assessment.";
+  toggleModal(title, message=this.defaultMessage){
     let icon = vote;
+    let size = "sm";
+    // default vote received
     if (title===this.modalTitles[0]){
-      // default vote received
       icon=vote;
     }
     else if (title===this.modalTitles[1]){
       message="Thank you for your submission - You will receive your tailored virtual presence assessment within 24 hours.";
       icon=video;
     }
+
     // error
     else if (title===this.modalTitles[2]){
-      message="Oops! The payment didn't go through";
+      // is default message?
+      if (message===this.defaultMessage){
+        message="Oops! The payment didn't go through";
+      }
       icon=attention;
     }
     // t&c
     else if (title===this.modalTitles[3]){
-      message = "Your video clip is used for the sole purpose of providing you with a virtual presence assessment. No content on this site is to be repurposed for any other use. No information is sold to third party organizations. ";
+      message = "TERMS OF SERVICE\n" +
+        "By clicking “Agree & Begin” below, you agree that the following terms and conditions will apply to the Virtual Presence Assessment (the “Service”) provided through www.vpassessment.com (the “Site”) by Choreography for Business, LLC (“Choreography for Business”, “we” or “us”). If you do not agree and accept, without limitation or qualification, these Terms of Service, you must exit the Site immediately and abstain from using the Service.\n" +
+        " <br/>  <br/> By using the Site or Service, you represent and warrant that you are 18 years of age or older.\n "+
+        " <br/>  <br/> When you purchase the Service, you will record and submit a short video to Choreography for Business through the Site, and we will provide you with a written Virtual Presence Assessment. We agree that we shall not sell or distribute your video images to any unaffiliated third party for any commercial purpose. By submitting your video through the Site, you grant us the irrevocable and unrestricted right to use and reproduce your video images in connection with the business activities of Choreography for Business and our affiliates, including for internal research, training and the development of new products or services. By using the Service, you release Choreography for Business from any and all claims and liability relating to our use of any video images or other information you submit through the Site, including any claim to profits that may arise from our internal use of said images or information, in accordance with the terms hereof.\n " +
+        " <br/>  <br/> THE SITE AND THE SERVICE ARE PROVIDED ON AN “AS IS” BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. CHOREOGRAPHY FOR BUSINESS HEREBY DISCLAIMS ANY AND ALL WARRANTIES RELATING TO THE SITE AND SERVICE OR ANY OTHER MATTER COVERED BY THESE TERMS OF SERVICE, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. CHOREOGRAPHY FOR BUSINESS MAKES NO WARRANTIES OR REPRESENTATIONS AS TO THE ACCURACY, COMPLETENESS, RELIABILITY, OR SECURITY OF ANY CONTENT PROCESSED BY THE SITE OR SERVICE, OR THAT ANY SERVICE OR ITEMS OBTAINED THROUGH THE SITE WILL OTHERWISE MEET YOUR NEEDS OR EXPECTATIONS. THE AGGREGATE LIMIT OF CHOREOGRAPHY FOR BUSINESS’ LIABILITY IN CONNECTION WITH ANY AND ALL CLAIMS ARISING UNDER THESE TERMS OF SERVICE OR OTHERWISE IN CONNECTION WITH THE SITE OR THE SERVICE SHALL BE THE AMOUNT THAT YOU HAVE PAID TO CHOREOGRAPHY FOR BUSINESS FOR THE SERVICE. \n" +
+        " <br/>  <br/> Choreography for Business retains the right to terminate its provision of the Service to you for any reason at any time. Provided that such termination is not by reason of your breach of these Terms of Services, you will receive a refund of any amounts you have paid for the Service.\n" +
+        " <br/>  <br/> All matters relating to the Site, Service and these Terms of Service shall be governed by and construed in accordance with the internal laws of the Commonwealth of Massachusetts without giving effect to any conflict of law provisions thereof.  Any lawsuit, action, or proceeding arising out of, or related to, the Site, Service or these Terms of Service shall be instituted exclusively in the state or federal courts located in Boston, Massachusetts.";
       icon=summary;
+      size = "lg";
     }
+
     this.setState({
       modal: !this.state.modal,
       title:title,
       message:message,
       icon:icon,
+      modalSize:size,
     });
   }
 
@@ -684,14 +710,14 @@ class IndexPage extends Component{
 
   sendEmail(e) {
     e.preventDefault();
-    console.log("email sent")
-    // emailjs.sendForm('gmail', 'template_8y6injc', e.target,
-    //   'user_cV1OsELmIYfBvcQFwMZHH')
-    //   .then((result) => {
-    //     console.log(result.text);
-    //   }, (error) => {
-    //     console.log(error.text);
-    //   });
+    console.log("email TO BE sent");
+    emailjs.sendForm(config.emailjsServiceID, emailjsContactPollID, e.target,
+      config.emailjsUserID)
+      .then((result) => {
+        console.log(result.text);
+      }, (error) => {
+        console.log(error.text);
+      });
   }
 
 }

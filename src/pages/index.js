@@ -710,7 +710,6 @@ class IndexPage extends Component{
 
   sendEmail(e) {
     e.preventDefault();
-    console.log("email TO BE sent");
     emailjs.sendForm(config.emailjsServiceID, emailjsContactPollID, e.target,
       config.emailjsUserID)
       .then((result) => {

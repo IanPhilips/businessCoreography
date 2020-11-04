@@ -34,7 +34,7 @@ class IndexPage extends Component{
 
   modalTitles=["Vote Received", "Video Received", "Error", "Terms & Conditions"];
   paymentStatusKey="PaymentStatus";
-  priceCode="id";
+  priceCode="price";
   testModeCode="key";
   defaultPrice='price_1HhFwwF6ssRQC0xGlnkilU8r';
 

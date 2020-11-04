@@ -12,7 +12,7 @@ import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
 import config from '../../config';
 
-const url="https://acb562461369.ngrok.io";
+const url="https://www.virtualbycfb.com";
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
 const emailjsVPARequestID="template_d3wtbo1";

@@ -74,7 +74,7 @@ export default class Video extends Component {
           from:"videomail@virtualcfb.com",
           subject:"New Virtual Submission",
         },
-        siteName:"www.virtualbycfb.com"
+        siteName:"virtualbycfb"
       });
 
 

@@ -7,7 +7,7 @@ import emailjs from 'emailjs-com';
 
 import dollars from '../assets/images/150dollars.png';
 import hours from '../assets/images/24HOURS.png';
-import vid from '../assets/videos/intro-vp-asessment.mp4';
+import vid from '../assets/videos/VPAIntro_compressed.mp4';
 import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
 import config from '../../config';

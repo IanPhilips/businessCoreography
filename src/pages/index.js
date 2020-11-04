@@ -624,6 +624,7 @@ class IndexPage extends Component{
                   {/*SUBMIT*/}
                   <div className={"col-lg-12 text-right mt-5"}>
                     <button className={"btn btn-outline gray "}
+                            type={"button"}
                             onClick={()=>this.toggleContact()}>
                       Cancel
                     </button>

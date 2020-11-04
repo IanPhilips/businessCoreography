@@ -92,8 +92,7 @@ class IndexPage extends Component{
     <Header />
 
     <header className="masthead">
-            <video autoPlay={"autoplay"} loop={"loop"} muted className={"video"}
-            style={{ height:"100%", width:"100%", objectFit:"cover" }}>
+            <video autoPlay={"autoplay"} loop={"loop"} muted className={"video"}>
               <source src={hero} type={"video/mp4"}/>
             </video>
 
@@ -102,19 +101,11 @@ class IndexPage extends Component{
       <div className="header-content mx-auto">
         <h1 className={"text-center"}> Personalized Virtual Presence Assessment</h1>
 
-
-          {/*<div className={"row text-center"}>*/}
-          {/*  <div className={"col-6  text-center"}>*/}
-        {/*<div  style={{ position:"absolute", top:0, height:"100%", width:"100%", objectFit:"cover" }}>*/}
-
         <div className={"row p-2 d-flex justify-content-center"} style={{marginTop:"1vh", fontSize:"22px"}}>
-                  <h5 className={"my-auto text-center text-white"}>Improving </h5>
-                  <h6 className={"mx-2 my-auto text-center p-2"} > Human Connection</h6>
-                  <h5 className={"my-auto text-center text-white"}> Over Video </h5>
-                </div>
-        {/*</div>*/}
-            {/*</div>*/}
-          {/*</div>*/}
+          <h5 className={"my-auto text-center text-white"}>Improving </h5>
+          <h6 className={"mx-2 my-auto text-center p-2"} > Human Connection</h6>
+          <h5 className={"my-auto text-center text-white"}> Over Video </h5>
+        </div>
 
         <div className={"text-center row d-flex justify-content-center mt-5"} style={{width:"100%"}}>
           <AnchorLink title={"GET MY ASSESSMENT"} className="nav-link" to="/#video" >

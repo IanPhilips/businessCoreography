@@ -13,6 +13,8 @@ import right from "../assets/images/Right side.jpg";
 import config from '../../config';
 
 const url="https://www.virtualbycfb.com";
+// const SITE_NAME= "videomail-client-demo";
+const SITE_NAME= "virtualbycfb";
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
 const emailjsVPARequestID="template_d3wtbo1";
@@ -27,12 +29,15 @@ export default class Video extends Component {
     name:"",
     waitlist:false,
     videomailURL:null,
+    displayContinueButton:"none"
   };
 
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.onVideomailSubmitted = this.onVideomailSubmitted.bind(this);
+    this.onFinishedRecording = this.onFinishedRecording.bind(this);
+    this.onStartedRecording = this.onStartedRecording.bind(this);
     this.redirectToStripe = this.redirectToStripe.bind(this);
     this.sendEmailJS = this.sendEmailJS.bind(this);
     this.handleFormSubmissionExtras = this.handleFormSubmissionExtras.bind(this);
@@ -74,13 +79,27 @@ export default class Video extends Component {
           from:"videomail@virtualcfb.com",
           subject:"New Virtual Submission",
         },
-        siteName:"virtualbycfb"
+        siteName:SITE_NAME,
+        text:{
+          buttons:{
+            pause:'Stop',
+            preview:'Next'
+          }
+        }
       });
-
-
+      
       videomailClient.on(
         videomailClient.events.SUBMITTED,
         this.onVideomailSubmitted.bind(videomailClient)
+      )
+
+      videomailClient.on(
+        videomailClient.events.PREVIEW,
+        this.onFinishedRecording.bind(videomailClient)
+      )
+      videomailClient.on(
+        videomailClient.events.COUNTDOWN,
+        this.onStartedRecording.bind(videomailClient)
       )
 
       this.setState({
@@ -89,6 +108,17 @@ export default class Video extends Component {
     })();
   }
 
+  onStartedRecording(videomail){
+    console.log("started!");
+    if (this.state.displayContinueButton!=="none")
+      this.setState({displayContinueButton:"none"})
+  }
+
+  onFinishedRecording(videomail){
+    console.log("finished!");
+    if (this.state.displayContinueButton!=="unset")
+      this.setState({displayContinueButton:"unset"})
+  }
 
 
   // INTRO
@@ -112,6 +142,10 @@ export default class Video extends Component {
             3. Enter your details and payment
           </h5>
           <br/><br/><br/>
+          <b style={{cursor:"pointer", textDecoration:"underline"}} onClick={()=>this.props.toggleParentModal("Terms & Conditions")} className={"mt-5"}>Terms & Conditions</b>
+          <p style={{fontSize:"14px", color:"#818181"}} className={"mb-4"}>
+            Your video and data are private and will not be shared with any third parties.
+          </p>
 
           <div className={"d-flex justify-content-center align-content-center"}>
           <button onClick={()=>this.setState({stage:1})}
@@ -121,11 +155,6 @@ export default class Video extends Component {
           </button>
           </div>
 
-          <br/><br/><br/>
-          <b style={{cursor:"pointer"}} onClick={()=>this.props.toggleParentModal("Terms & Conditions")} className={"mt-5"}>Terms & Conditions</b>
-          <p style={{fontSize:"14px", color:"#818181"}}>
-            Your video and data are private and will not be shared with any third parties.
-          </p>
         </div>
         <div className={"col-3"}>
           <img src={hours} alt={""}  className={"img-fluid mb-5"}/>
@@ -170,7 +199,10 @@ export default class Video extends Component {
     return(
       <div className={"row"}>
           <div className={"col-lg-12 text-right"}>
-            <button  className={"text-white btn"} onClick={()=>this.setState({stage:this.state.stage+1 })}>
+            <button  className={"text-white btn"}
+                     onClick={()=>this.setState({stage:this.state.stage+1 })}
+                     style={{display: this.state.displayContinueButton}}
+            >
               CONTINUE
             </button>
         </div>

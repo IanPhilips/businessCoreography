@@ -5,10 +5,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { AnchorLink } from "gatsby-plugin-anchor-links";
 import {
-  MDBAnimation, MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
+  MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
 } from 'mdbreact';
 import emailjs from 'emailjs-com';
 import Video from '../components/Video';
+import { Slide, Fade } from "react-awesome-reveal";
 
 import config from '../../config';
 import badLighting from "../assets/images/Bad lighting.png";
@@ -139,7 +140,7 @@ class IndexPage extends Component{
         <div className="row">
 
           <div className="col-lg-4 mb-5 ">
-            <MDBAnimation className={"mb-5"} type={"fadeIn"} duration={"1s"} reveal={true} delay={"0.25s"}>
+            <Fade className={"mb-5"} triggerOnce delay={0} >
               <MDBCard className="feature-item">
                 <h5>Bad Lighting</h5>
                 <p className="card-notes">
@@ -147,22 +148,22 @@ class IndexPage extends Component{
                 </p>
                 <img src={badLighting} alt={"bad lighting"} className={"card-image"} />
               </MDBCard>
-            </MDBAnimation>
+            </Fade>
           </div>
 
           <div className="col-lg-4 mb-5">
-            <MDBAnimation className={"mb-5"} type={"fadeIn"} duration={"1s"} delay={"0.5s"} reveal={true}>
-              <MDBCard className="feature-item">
+            <Fade className={"mb-5"} triggerOnce delay={400} >
+            <MDBCard className="feature-item">
                 <h5>Lens Too High</h5>
                 <p className="card-notes">
                   Loss of authority on camera </p>
                 <img src={tooHigh} alt={"Lens Too High"} className={"card-image"} />
               </MDBCard>
-            </MDBAnimation>
+            </Fade>
           </div>
 
           <div className="col-lg-4 mb-5">
-            <MDBAnimation className={"mb-5"} type={"fadeIn"} duration={"1s"} delay={".75s"} reveal={true}>
+            <Fade className={"mb-5"} triggerOnce delay={800} >
               <MDBCard className="feature-item">
                 <h5>Lens Too Close</h5>
                 <p className="card-notes">
@@ -170,7 +171,7 @@ class IndexPage extends Component{
                 </p>
               <img src={tooClose} alt={"Lens Too Close"} className={"card-image"} />
               </MDBCard>
-            </MDBAnimation>
+            </Fade>
           </div>
 
 
@@ -188,45 +189,45 @@ class IndexPage extends Component{
           <div className="row">
 
                 <div className="col-lg-3">
-                <MDBAnimation type={"fadeIn"} duration={"1s"} delay={"0.25s"} reveal={true}>
+                <Fade triggerOnce delay={0} >
                   <div className="feature-item">
                     <img className={"card-image"} src={colleagues} alt={""}  />
                     <p className="card-notes">More deeply communicate with your colleagues</p>
                   </div>
-                </MDBAnimation>
+                </Fade>
                 </div>
 
                 <div className="col-lg-3">
-                  <MDBAnimation type={"fadeIn"} duration={"1s"} delay={".5s"} reveal={true}>
+                  <Fade triggerOnce delay={400} >
                   <div className="feature-item">
                     <img className={"card-image"} src={hands} alt={""} />
                     <p className="card-notes">
                      Develop trusting relationships wth your clients
                     </p>
                   </div>
-                  </MDBAnimation>
+                  </Fade>
                 </div>
 
                 <div className="col-lg-3">
-                  <MDBAnimation type={"fadeIn"} duration={"1s"} reveal={true} delay={"1s"}>
+                  <Fade triggerOnce delay={800} >
                   <div className="feature-item">
                     <img className={"card-image"} src={target} alt={""}/>
                     <p className="card-notes">
                       Manage your own energy and focus
                     </p>
                   </div>
-                  </MDBAnimation>
+                  </Fade>
                 </div>
 
                 <div className="col-lg-3">
-                  <MDBAnimation type={"fadeIn"} duration={"1s"} delay={"1.25s"} reveal={true}>
+                  <Fade triggerOnce delay={1200} >
                     <div className="feature-item">
                       <img className={"card-image"} src={attention} alt={""}/>
                       <p className=" card-notes">
                         Hold your audience's attention in virtual presentations
                       </p>
                     </div>
-                  </MDBAnimation>
+                  </Fade>
                 </div>
         </div>
         </div>
@@ -240,7 +241,7 @@ class IndexPage extends Component{
           <div className="col-lg-8 mx-auto my-auto">
             <form className="contact-form" onSubmit={this.sendEmail}>
 
-            <MDBAnimation type={"fadeIn"} duration={"1s"} reveal={true} delay={"1s"}>
+            <Fade triggerOnce delay={0} >
               <MDBCard className="poll p-3">
                 <h3 style={{fontWeight:"bold"}} className={"text-center m-4"}>Take The Poll</h3>
                 <p className="text-center"> What do you find most challenging when it comes to video communication? </p>
@@ -319,7 +320,7 @@ class IndexPage extends Component{
                   />
                 </div>
               </MDBCard>
-            </MDBAnimation>
+            </Fade>
             </form>
           </div>
         </div>
@@ -358,24 +359,24 @@ class IndexPage extends Component{
     {/*ASSESSMENT*/}
     <section className="assessment" id="assessment">
       <div className="container-fluid not-too-wide" >
-        <MDBAnimation type={"slideInRight"} duration={"1s"} reveal={true} >
+        <Fade triggerOnce delay={0} duration={1000} >
 
         <div className="section-heading text-center mb-5">
           <h4 >With your customized assessment, learn how to be your best communicator. <br/><br/>
           This includes:</h4>
         </div>
 
-        </MDBAnimation>
+        </Fade>
         <div className="row">
           <div className="col-lg-4 mx-auto my-auto text-center" >
-            <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={true} className={"mb-4 mx-auto"} >
+            <Slide triggerOnce delay={0} direction={"left"}  className={"mb-4 mx-auto"} >
               <img src={assessment} alt={""} style={{width:"100%"}} />
-            </MDBAnimation>
+            </Slide>
           </div>
           <div className="col-lg-8" >
             <div className="row ">
               <div className="col-lg-6 mb-5">
-                <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={true} className={"h-100"}>
+                <Slide triggerOnce delay={0} direction={"left"}  className={"h-100"}>
                   <MDBCard className={" feature-item "}>
                     <h3> Summary </h3>
                     <MDBCardBody >
@@ -383,11 +384,11 @@ class IndexPage extends Component{
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={summary} alt={""} />
                   </MDBCard>
-                </MDBAnimation>
+                </Slide>
 
               </div>
               <div className="col-lg-6 mb-5">
-                <MDBAnimation type={"slideInRight"} duration={"1s"} reveal={true} className={"h-100"}>
+                <Slide triggerOnce delay={0} direction={"right"}  className={"h-100"}>
 
                   <MDBCard className={"feature-item h-100"}>
                     <h3> Metrics </h3>
@@ -396,12 +397,12 @@ class IndexPage extends Component{
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={metrics} alt={""} />
                   </MDBCard>
-                </MDBAnimation>
+                </Slide>
               </div>
             </div>
             <div className="row">
               <div className="col-lg-6 mb-5">
-                <MDBAnimation type={"slideInLeft"} duration={"1s"} reveal={true} className={"h-100"} >
+                <Slide triggerOnce delay={0} direction={"left"}  className={"h-100"} >
                   <MDBCard className={"feature-item"}>
                     <h3> Score </h3>
                     <MDBCardBody >
@@ -409,10 +410,10 @@ class IndexPage extends Component{
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={score} alt={""} />
                   </MDBCard>
-                </MDBAnimation>
+                </Slide>
               </div>
               <div className="col-lg-6 mb-5">
-                <MDBAnimation type={"slideInRight"} duration={"1s"} reveal={true} className={"h-100"} >
+                <Slide triggerOnce delay={0} direction={"right"}  className={"h-100"} >
                   <MDBCard className={"feature-item"}>
                     <h3> Recommendations </h3>
                     <MDBCardBody >
@@ -420,7 +421,7 @@ class IndexPage extends Component{
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={recommendation} alt={""} />
                   </MDBCard>
-                </MDBAnimation>
+                </Slide>
               </div>
             </div>
          </div>
@@ -485,7 +486,7 @@ class IndexPage extends Component{
 
     {/*INTEREST BAR*/}
     <section className="bg-tertiary" id="contact" style={{padding:"10px"}}>
-      <MDBAnimation type={"fadeIn"} duration={"1s"} reveal={true} >
+      <Fade triggerOnce delay={0} >
       <div className="row d-flex justify-content-center text-center col-12">
         {/*<div className={"col-lg-6 my-auto"} >*/}
           <b className={"my-auto mr-4"}>Interested in more consistent feedback and coaching? </b>
@@ -496,7 +497,7 @@ class IndexPage extends Component{
           </button>
         {/*</div>*/}
       </div>
-      </MDBAnimation>
+      </Fade>
 
     </section>
     <section className="contact bg-secondary" id="contactline" style={{padding:"2px"}}>
@@ -539,7 +540,7 @@ class IndexPage extends Component{
           </b>
           <div className={"col-lg-12"}>
 
-            <MDBAnimation type={"fadeIn"} duration={"1s"} reveal={true} >
+            <Fade triggerOnce delay={0} duration={1000} >
               <div className="container mb-5">
 
                 <form className="contact-form text-right" onSubmit={this.sendEmail}>
@@ -635,7 +636,7 @@ class IndexPage extends Component{
                   </div>
                 </form>
               </div>
-            </MDBAnimation>
+            </Fade>
           </div>
 
         </div>

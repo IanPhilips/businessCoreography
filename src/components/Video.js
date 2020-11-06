@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { MDBAnimation, MDBCard } from 'mdbreact';
+import { MDBCard } from 'mdbreact';
 import { Helmet } from "react-helmet"
 import { loadStripe } from '@stripe/stripe-js/pure';
 import addToMailchimp from 'gatsby-plugin-mailchimp';
 import emailjs from 'emailjs-com';
+import { Slide, Fade } from "react-awesome-reveal";
 
 import dollars from '../assets/images/150dollars.png';
 import hours from '../assets/images/24HOURS.png';
@@ -87,7 +88,7 @@ export default class Video extends Component {
           }
         }
       });
-      
+
       videomailClient.on(
         videomailClient.events.SUBMITTED,
         this.onVideomailSubmitted.bind(videomailClient)
@@ -155,6 +156,15 @@ export default class Video extends Component {
           </button>
           </div>
 
+
+          <p style={{fontSize:"14px", color:"#818181"}} className={"mb-4"}>
+            Empower your teams with a Virtual Presence Assessment package for your company - <b> </b>
+            <a style={{cursor:"pointer", textDecoration:"underline"}}
+               href="mailto:rachel@choreographyforbusiness.com"
+               className={""}>email us</a>
+          </p>
+
+
         </div>
         <div className={"col-3"}>
           <img src={hours} alt={""}  className={"img-fluid mb-5"}/>
@@ -218,7 +228,7 @@ export default class Video extends Component {
 
         <div className={"col-lg-12"}>
 
-        <MDBAnimation type={"fadeIn"} duration={"1s"} reveal={true} >
+        <Fade triggerOnce delay={0} duration={1000} >
           <div className="container mb-5">
             <h3 className={"text-left mb-4"}> Contact Information</h3>
             <p className={"text-left"} style={{maxWidth:"60vw", fontWeight:"bold"}}>
@@ -280,7 +290,7 @@ export default class Video extends Component {
               </div>
 
           </div>
-        </MDBAnimation>
+        </Fade>
         </div>
       </div>
     )
@@ -435,15 +445,15 @@ export default class Video extends Component {
 
 
         <div className={"curtain-left"}>
-          <MDBAnimation type={"slideInRight"} duration={"3s"} reveal={true}  className={"curtain"} >
+          <Slide triggerOnce delay={0} duration={3000} direction={"right"}  className={"curtain"} >
             <img  src={right} alt={"curtains"} className={"video-curtain "} />
-          </MDBAnimation>
+          </Slide>
         </div>
 
         <div className={"curtain-right"}>
-          <MDBAnimation type={"slideInRight"} duration={"3s"} reveal={true}  className={"curtain"}>
+          <Slide triggerOnce delay={0} duration={3000} direction={"right"}  className={"curtain"}>
             <img  src={left} alt={"curtains"}  className={"video-curtain"} />
-          </MDBAnimation>
+          </Slide>
         </div>
 
         <MDBCard className={"video-card text-center"}>

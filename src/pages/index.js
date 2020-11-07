@@ -393,7 +393,7 @@ class IndexPage extends Component{
                   <MDBCard className={"feature-item h-100"}>
                     <h3> Metrics </h3>
                     <MDBCardBody >
-                      Suggestions for immediate improvement to your virtual presence
+                      Top three areas of improvement from a list of 15 virtual presence metrics
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={metrics} alt={""} />
                   </MDBCard>
@@ -406,7 +406,7 @@ class IndexPage extends Component{
                   <MDBCard className={"feature-item"}>
                     <h3> Score </h3>
                     <MDBCardBody >
-                      Suggestions for immediate improvement to your virtual presence
+                      Your overall Virtual Presence Score
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={score} alt={""} />
                   </MDBCard>
@@ -488,14 +488,10 @@ class IndexPage extends Component{
     <section className="bg-tertiary" id="contact" style={{padding:"10px"}}>
       <Fade triggerOnce delay={0} >
       <div className="row d-flex justify-content-center text-center col-12">
-        {/*<div className={"col-lg-6 my-auto"} >*/}
           <b className={"my-auto mr-4"}>Interested in more consistent feedback and coaching? </b>
-        {/*</div>*/}
-        {/*<div className={"col-lg-6"}>*/}
           <button onClick={()=>{this.toggleContact()}} className={"text-white btn "}>
             Let us know
           </button>
-        {/*</div>*/}
       </div>
       </Fade>
 

@@ -353,20 +353,22 @@ export default class Video extends Component {
 
     // When the customer clicks on the button, redirect them to Checkout.
     const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout(
-       {sessionId:"cs_live_b0oxAUOmuMuG5jAmatw7aCF2jWC14aGH1nOS1ZhKrs6FGrKcgmEIiNpta8"}
-     );
+
+    // testing session id:
+    // const { error } = await stripe.redirectToCheckout(
+    //    {sessionId:"cs_live_b0oxAUOmuMuG5jAmatw7aCF2jWC14aGH1nOS1ZhKrs6FGrKcgmEIiNpta8"}
+    //  );
 
 
-     // const { error } = await stripe.redirectToCheckout({
-    //   lineItems: [{
-    //     price: price,
-    //     quantity: 1,
-    //   }],
-    //   mode: 'payment',
-    //   successUrl: url+'?PaymentStatus=success',
-    //   cancelUrl: url+'?PaymentStatus=fail',
-    // });
+     const { error } = await stripe.redirectToCheckout({
+      lineItems: [{
+        price: price,
+        quantity: 1,
+      }],
+      mode: 'payment',
+      successUrl: url+'?PaymentStatus=success',
+      cancelUrl: url+'?PaymentStatus=fail',
+    });
     console.log("stripe error",error);
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer

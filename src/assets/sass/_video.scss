@@ -4,6 +4,14 @@ section.video {
         font-weight: bold;
     }
 
+    .unbold{
+        font-weight: normal;
+    }
+
+    .cram-words{
+        padding: 12px 15px 9px 15px;
+
+    }
     .device-container {
         margin-bottom: 10px;
         @media(min-width: 992px) {

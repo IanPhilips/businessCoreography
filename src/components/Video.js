@@ -13,11 +13,13 @@ import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
 import config from '../../config';
 
-const url="https://www.virtualbycfb.com";
-// const SITE_NAME= "videomail-client-demo";
-const SITE_NAME= "virtualbycfb";
+// const url="https://www.virtualbycfb.com";
+// const SITE_NAME= "virtualbycfb";
+const url="https://locahlhost:8443";
+const SITE_NAME= "videomail-client-demo";
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
+// let stripePromise = loadStripe('pk_test_51H0C4qF6ssRQC0xGIM11rZZXv7p1kMPWBQ0Lrc9TUjszV1l9Wj5E9Gzez1Luva9ceKF6HzGbZDJQFewe1dNsUjzX00STSIxSk1');
 const emailjsVPARequestID="template_d3wtbo1";
 
 export default class Video extends Component {
@@ -134,13 +136,16 @@ export default class Video extends Component {
           <br/>
           <br/>
           <h5 style={{fontSize:20}} className={"mb-5"}>
-            1. Select your topic
+            1.  Select a Prompt
             <br/>
             <br/>
             2. Record your 30-60 second video
             <br/>
             <br/>
             3. Enter your details and payment
+            <br/>
+            <br/>
+            4. Receive your Virtual Presence Assessment in 24 hours
           </h5>
           <br/><br/><br/>
           <b style={{cursor:"pointer", textDecoration:"underline"}} onClick={()=>this.props.toggleParentModal("Terms & Conditions")} className={"mt-5"}>Terms & Conditions</b>
@@ -150,7 +155,7 @@ export default class Video extends Component {
 
           <div className={"d-flex justify-content-center align-content-center"}>
           <button onClick={()=>this.setState({stage:1})}
-                  className={"text-white btn mt-5 btn-xl mx-auto" }>
+                  className={"text-white btn mt-3 btn-xl mx-auto" }>
 
             AGREE & BEGIN
           </button>
@@ -185,19 +190,22 @@ export default class Video extends Component {
         <div className={"col-12 img-fluid"}>
           <video autoPlay={"autoplay"} controls={true} className={"intro-video img-fluid "} src={vid} />
         </div>
-        <div className={"col-12 col-md-6 col-xl-4 "}>
-          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Sports / Activities" })}>
-            Sport / ACTIVITY
+        <div className={"col-12 text-center mt-4 "}>
+          <h3 className={"unbold"}>Tell me about your ...</h3>
+        </div>
+        <div className={"col-12 col-md-4 col-xl-4"}>
+          <button  className={"text-white btn cram-words"} onClick={()=>this.setState({stage:2, topic:"Tell me about your favorite sport/activity" })}>
+            Favorite Activity
           </button>
         </div>
-        <div className={"col-12 col-md-6 col-xl-4 "}>
-          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Elevator Pitch" })}>
-            ELEVATOR PITCH
+        <div className={"col-12 col-md-4 col-xl-4"}>
+          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Give me your elevator pitch" })}>
+            company
           </button>
         </div>
-        <div className={"col-12 col-md-6 col-xl-4 "}>
-          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Mmm, Breakfast" })}>
-            MMM, BREAKFAST
+        <div className={"col-12 col-md-4 col-xl-4"}>
+          <button  className={"text-white btn cram-words"} onClick={()=>this.setState({stage:2, topic:"Describe your favorite recent meal" })}>
+            favorite meal
           </button>
         </div>
       </div>
@@ -342,18 +350,22 @@ export default class Video extends Component {
     console.log("doing stripe!", price);
     console.log("test mode?", this.props.testMode);
 
-
     // When the customer clicks on the button, redirect them to Checkout.
     const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout({
-      lineItems: [{
-        price: price,
-        quantity: 1,
-      }],
-      mode: 'payment',
-      successUrl: url+'?PaymentStatus=success',
-      cancelUrl: url+'?PaymentStatus=fail',
-    });
+    const { error } = await stripe.redirectToCheckout(
+       {sessionId:"cs_live_b0oxAUOmuMuG5jAmatw7aCF2jWC14aGH1nOS1ZhKrs6FGrKcgmEIiNpta8"}
+     );
+
+
+     // const { error } = await stripe.redirectToCheckout({
+    //   lineItems: [{
+    //     price: price,
+    //     quantity: 1,
+    //   }],
+    //   mode: 'payment',
+    //   successUrl: url+'?PaymentStatus=success',
+    //   cancelUrl: url+'?PaymentStatus=fail',
+    // });
     console.log("stripe error",error);
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer

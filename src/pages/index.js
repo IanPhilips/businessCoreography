@@ -129,7 +129,7 @@ class IndexPage extends Component{
             <hr />
           </div>
           <div className="col-lg-6 ">
-            <h2 className={"mb-5"}>VIRTUAL PRESENCE FAILS</h2>
+            <h2 className={"mb-5"}> Common VIRTUAL PRESENCE FAILS</h2>
             <p className={"my-4"}>A couple of seconds is all it takes to form a first impression.</p>
           </div>
           <div className={"col-lg-3"}>
@@ -234,137 +234,25 @@ class IndexPage extends Component{
       </div>
     </section>
 
-    {/*POLL*/}
-    <section className="cta my-5" id="cta">
-      <div className="container">
-        <div className="row ">
-          <div className="col-lg-8 mx-auto my-auto">
-            <form className="contact-form" onSubmit={this.sendEmail}>
-
-            <Fade triggerOnce delay={0} >
-              <MDBCard className="poll p-3">
-                <h3 style={{fontWeight:"bold"}} className={"text-center m-4"}>Take The Poll</h3>
-                <p className="text-center"> What do you find most challenging when it comes to video communication? </p>
-
-                <div className="form-check radio">
-                  <input className="form-check-input" type="radio"
-                         name="Staying focused"
-                         id="radio1"
-                         value="Staying focused"
-                         checked={this.state.radio===1}
-                         onChange={this.onRadioSelect(1)}
-                  />
-                    <label className="form-check-label" htmlFor="radio1">
-                      Staying focused
-                    </label>
-                </div>
-                <div className="form-check radio">
-                  <input className="form-check-input" type="radio"
-                         name="Feeling connected to my audience/presenter"
-                         id="radio2"
-                         value="Feeling connected to my audience/presenter"
-                         checked={this.state.radio===2}
-                         onChange={this.onRadioSelect(2)}
-                  />
-                    <label className="form-check-label" htmlFor="radio2">
-                      Feeling connected to my audience/presenter
-                    </label>
-                </div>
-                <div className="form-check radio">
-                  <input className="form-check-input" type="radio"
-                         name="Video conferencing fatigue"
-                         id="radio3"
-                         value="Video conferencing fatigue"
-                         checked={this.state.radio===3}
-                         onChange={this.onRadioSelect(3)}
-                  />
-                  <label className="form-check-label" htmlFor="radio3">
-                    Video conferencing fatigue
-                  </label>
-                </div>
-                <div className="form-check radio">
-                  <input className="form-check-input" type="radio"
-                         name="Delivering content with enthusiasm"
-                         id="radio4"
-                         value="Delivering content with enthusiasm"
-                         checked={this.state.radio===4}
-                         onChange={this.onRadioSelect(4)}
-                  />
-                  <label className="form-check-label" htmlFor="radio4">
-                    Delivering content with enthusiasm
-                  </label>
-                </div>
-                <div className="radio form-check">
-                  <input className="form-check-input" type="radio"
-                         name="Other"
-                         id="radio5"
-                         value="Other"
-                         checked={this.state.radio===5}
-                         onChange={this.onRadioSelect(5)}
-                  />
-                  <label className="form-check-label" htmlFor="radio5">
-                    Other
-                  </label>
-                  <input className={"ml-3"} type="text" id={"Challenge"}
-                         placeholder={"My Challenge is ..."} name="Challenge"
-                         style={{borderRadius:"1px", borderWidth:"1.5px",
-                           fontSize:"16px", maxWidth:"500px", width:"100%"}}/>
-                </div>
-                {/*SUBMIT*/}
-                <div className={"text-center"}>
-                  <input type="submit" value="VOTE NOW"
-                         onClick={()=>this.toggleModal(this.modalTitles[0])}
-                         className="btn text-white mt-5"
-
-                         style={{width:"300px"}}
-                  />
-                </div>
-              </MDBCard>
-            </Fade>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/*VIDEO SUBMISSION*/}
-    <section className="video" id="video">
-      <div className="container-fluid">
-        <div className="row section-heading text-center mb-5 ">
-          <div className={"col-lg-3"}>
-            <hr />
-          </div>
-          <div className="col-lg-6">
-            <h2>ELEVATE YOUR VIRTUAL PRESENCE</h2>
-          </div>
-          <div className={"col-lg-3"}>
-            <hr />
-          </div>
-        </div>
-
-        <div className="row equal">
-          {this.state.price
-            ? <Video toggleParentModal={this.toggleModal}
-                     price={this.state.price}
-                     testMode={this.state.testMode}
-            />
-            : <div/>
-          }
-        </div>
-
-      </div>
-    </section>
-
 
     {/*ASSESSMENT*/}
     <section className="assessment" id="assessment">
       <div className="container-fluid not-too-wide" >
         <Fade triggerOnce delay={0} duration={1000} >
-
-        <div className="section-heading text-center mb-5">
-          <h4 >With your customized assessment, learn how to be your best communicator. <br/><br/>
-          This includes:</h4>
-        </div>
+          <div className="row section-heading text-center mb-4 ">
+            <div className={"col-lg-3"}>
+              <hr />
+            </div>
+            <div className="col-lg-6">
+              <h2>ELEVATE YOUR VIRTUAL PRESENCE</h2>
+            </div>
+            <div className={"col-lg-3"}>
+              <hr />
+            </div>
+          </div>
+          <div className="section-heading text-center mb-5">
+            <p> Customized assessment according to 14 virtual presence metrics.</p>
+          </div>
 
         </Fade>
         <div className="row">
@@ -393,7 +281,7 @@ class IndexPage extends Component{
                   <MDBCard className={"feature-item h-100"}>
                     <h3> Metrics </h3>
                     <MDBCardBody >
-                      Top three areas of improvement from a list of 15 virtual presence metrics
+                      Top three areas of improvement from a list of 14 virtual presence metrics
                     </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={metrics} alt={""} />
                   </MDBCard>
@@ -424,7 +312,120 @@ class IndexPage extends Component{
                 </Slide>
               </div>
             </div>
-         </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    {/*VIDEO SUBMISSION*/}
+    <section className="video" id="video">
+      <div className="container-fluid">
+
+
+        <div className="row equal">
+          {this.state.price
+            ? <Video toggleParentModal={this.toggleModal}
+                     price={this.state.price}
+                     testMode={this.state.testMode}
+            />
+            : <div/>
+          }
+        </div>
+
+      </div>
+    </section>
+
+
+    {/*POLL*/}
+    <section className="cta my-2" id="cta">
+      <div className="container">
+        <div className="row ">
+          <div className="col-lg-8 mx-auto my-auto">
+            <form className="contact-form" onSubmit={this.sendEmail}>
+
+              <Fade triggerOnce delay={0} >
+                <MDBCard className="poll p-3">
+                  <h3 style={{fontWeight:"bold"}} className={"text-center m-4"}>Take The Poll</h3>
+                  <p className="text-center"> What do you find most challenging when it comes to video communication? </p>
+
+                  <div className="form-check radio">
+                    <input className="form-check-input" type="radio"
+                           name="Staying focused"
+                           id="radio1"
+                           value="Staying focused"
+                           checked={this.state.radio===1}
+                           onChange={this.onRadioSelect(1)}
+                    />
+                    <label className="form-check-label" htmlFor="radio1">
+                      Staying focused
+                    </label>
+                  </div>
+                  <div className="form-check radio">
+                    <input className="form-check-input" type="radio"
+                           name="Feeling connected to my audience/presenter"
+                           id="radio2"
+                           value="Feeling connected to my audience/presenter"
+                           checked={this.state.radio===2}
+                           onChange={this.onRadioSelect(2)}
+                    />
+                    <label className="form-check-label" htmlFor="radio2">
+                      Feeling connected to my audience/presenter
+                    </label>
+                  </div>
+                  <div className="form-check radio">
+                    <input className="form-check-input" type="radio"
+                           name="Video conferencing fatigue"
+                           id="radio3"
+                           value="Video conferencing fatigue"
+                           checked={this.state.radio===3}
+                           onChange={this.onRadioSelect(3)}
+                    />
+                    <label className="form-check-label" htmlFor="radio3">
+                      Video conferencing fatigue
+                    </label>
+                  </div>
+                  <div className="form-check radio">
+                    <input className="form-check-input" type="radio"
+                           name="Delivering content with enthusiasm"
+                           id="radio4"
+                           value="Delivering content with enthusiasm"
+                           checked={this.state.radio===4}
+                           onChange={this.onRadioSelect(4)}
+                    />
+                    <label className="form-check-label" htmlFor="radio4">
+                      Delivering content with enthusiasm
+                    </label>
+                  </div>
+                  <div className="radio form-check">
+                    <input className="form-check-input" type="radio"
+                           name="Other"
+                           id="radio5"
+                           value="Other"
+                           checked={this.state.radio===5}
+                           onChange={this.onRadioSelect(5)}
+                    />
+                    <label className="form-check-label" htmlFor="radio5">
+                      Other
+                    </label>
+                    <input className={"ml-3"} type="text" id={"Challenge"}
+                           placeholder={"My Challenge is ..."} name="Challenge"
+                           style={{borderRadius:"1px", borderWidth:"1.5px",
+                             fontSize:"16px", maxWidth:"500px", width:"100%"}}/>
+                  </div>
+                  {/*SUBMIT*/}
+                  <div className={"text-center"}>
+                    <input type="submit" value="VOTE NOW"
+                           onClick={()=>this.toggleModal(this.modalTitles[0])}
+                           className="btn text-white mt-5"
+
+                           style={{width:"300px"}}
+                    />
+                  </div>
+                </MDBCard>
+              </Fade>
+            </form>
+          </div>
         </div>
       </div>
     </section>

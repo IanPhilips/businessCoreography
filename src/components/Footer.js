@@ -30,13 +30,13 @@ export default function Footer() {
             </div>
             <div className={"col-lg-6"}>
               <p >
-                225 FRANKLIN STREET
+                75 STATE STREET SUITE 100
               <br/>
               <br/>
                 BOSTON, MA
               <br/>
               <br/>
-                02110
+                02109
               </p>
             </div>
           </div>

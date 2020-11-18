@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '../../config';
 import book from "../assets/images/Cover JPEG.jpg";
-
+import privacy from "../assets/images/PRIVACY POLICY FINAL.pdf"
 export default function Footer() {
   return (
     <footer>
@@ -26,6 +26,9 @@ export default function Footer() {
               <br/>
               <br/>
               <a href={"https://choreographyforbusiness.com/aboutcfb"}>ABOUT</a>
+              <br/>
+              <br/>
+              <a href={privacy}>PRIVACY POLICY</a>
             </p>
             </div>
             <div className={"col-lg-6"}>

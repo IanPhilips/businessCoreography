@@ -58,6 +58,17 @@ class IndexPage extends Component{
   }
 
   componentDidMount() {
+    this.showModalWithParams();
+  }
+
+  componentDidUpdate(prevProps){
+    if (prevProps.location.href !== this.props.location.href) {
+      console.log("updating!!");
+      this.showModalWithParams();
+    }
+  }
+
+  showModalWithParams(){
     let params = (new URL(this.props.location.href)).searchParams;
     // PARSE PRICE
     let price = params.get(this.priceCode);
@@ -627,7 +638,7 @@ class IndexPage extends Component{
                       Cancel
                     </button>
                     <input type="submit" onClick={ ()=>this.toggleContact()} value="submit"
-                           className=" btn text-white "
+                           className="text-white button btn "
                            style={{width:"200px"}}
                     />
                   </div>

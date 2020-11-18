@@ -12,12 +12,13 @@ import vid from '../assets/videos/VPAIntro_compressed.mp4';
 import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
 import config from '../../config';
-
+import { navigate } from 'gatsby'
 //TODO: check node environment and switch vars appropriately
-const url="https://www.virtualbycfb.com";
-const SITE_NAME= "virtualbycfb";
-// const url="https://locahlhost:8443";
-// const SITE_NAME= "videomail-client-demo";
+// const url="https://www.virtualbycfb.com";
+// const SITE_NAME= "virtualbycfb";
+const API="https://us-central1-long-ratio-295321.cloudfunctions.net/CreateSession"
+const url="https://localhost:8443";
+const SITE_NAME= "videomail-client-demo";
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
 // let stripePromise = loadStripe('pk_test_51H0C4qF6ssRQC0xGIM11rZZXv7p1kMPWBQ0Lrc9TUjszV1l9Wj5E9Gzez1Luva9ceKF6HzGbZDJQFewe1dNsUjzX00STSIxSk1');
@@ -31,6 +32,8 @@ export default class Video extends Component {
     videomailClient:null,
     email:"",
     name:"",
+    promo:"",
+    stripeID:"",
     waitlist:false,
     videomailURL:null,
     displayContinueButton:"none"
@@ -44,6 +47,7 @@ export default class Video extends Component {
     this.onStartedRecording = this.onStartedRecording.bind(this);
     this.redirectToStripe = this.redirectToStripe.bind(this);
     this.sendEmailJS = this.sendEmailJS.bind(this);
+    this.submitPromoToBackend = this.submitPromoToBackend.bind(this);
     this.handleFormSubmissionExtras = this.handleFormSubmissionExtras.bind(this);
   }
 
@@ -251,6 +255,7 @@ export default class Video extends Component {
                        placeholder={"First Last"} name="name"
                        value={this.state.name}
                        onChange={this.handleChange}
+                       required={true}
                        style={{borderRadius:"5px", borderWidth:"1.5px"}}/>
                 <div className={"col-lg-2"}/>
               </div>
@@ -261,6 +266,7 @@ export default class Video extends Component {
                        placeholder={"Email@email.com"} name="email"
                        value={this.state.email}
                        onChange={this.handleChange}
+                       required={true}
                        style={{borderRadius:"5px", borderWidth:"1.5px"}}/>
                 <div className={"col-lg-2"}/>
               </div>
@@ -285,6 +291,17 @@ export default class Video extends Component {
               <p className={"text-left"} style={{maxWidth:"60vw", fontWeight:"bold"}}>
                 By clicking checkout below, you will be redirected to a third party website to submit your payment.
               </p>
+              {/*EMAIL*/}
+              <div className={"row"}>
+                <label htmlFor={"promo"} className={"col-2 col-lg-3 m-3 mt-4"}> Promo </label>
+                <input className={"mt-3 col-lg-6 col-8 "} type="text" id={"promo"}
+                       placeholder={"(Optional)"} name="promo"
+                       value={this.state.promo}
+                       onChange={this.handleChange}
+                       style={{borderRadius:"5px", borderWidth:"1.5px"}}/>
+                <div className={"col-lg-2"}/>
+              </div>
+
               {/*SUBMIT*/}
               <div className={"col-lg-12 text-center"}>
                   <button className={"btn btn-outline  gray"}
@@ -305,7 +322,7 @@ export default class Video extends Component {
     )
   }
 
-
+// called after videomail is submitted, sends the emailjs link
   onVideomailSubmitted(videomail) {
     console.log("On submit videomail", videomail);
     this.setState({videomailURL:videomail.url},
@@ -313,7 +330,13 @@ export default class Video extends Component {
       );
   }
 
+// >mailchimp > backend > emailjs > stripe
   async handleFormSubmissionExtras(){
+    if (this.state.name==="" || this.state.email===""){
+
+      return;
+    }
+
     let mailchimpResponse = {"result":null};
     if (this.state.waitlist){
       mailchimpResponse = await this.signUpEmail(this.state.name, this.state.email)
@@ -324,8 +347,51 @@ export default class Video extends Component {
       this.props.toggleParentModal("Error", mailchimpResponse["msg"])
     }
     else{
-      this.state.videomailClient.submit();
+      this.submitPromoToBackend();
+      //this.state.videomailClient.submit();
     }
+  }
+
+  submitPromoToBackend(){
+    console.log("submitting to backend");
+    fetch(API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+      {
+        promo_code: this.state.promo,
+        price_id: price,
+        success_url: url + "/?PaymentStatus=success",
+        cancel_url: url + "/?PaymentStatus=fail"
+         }
+    )
+  }).then(res=>res.json())
+    .then(async res =>
+      {
+        console.log("backend result: ", res)
+        // go to stripe
+        if (res["id"]!=''){
+            this.setState({
+              stripeID:res["id"]
+            },
+          this.state.videomailClient.submit)
+          return
+        }
+        // error
+        else if (res["error"]!=''){
+          this.props.toggleParentModal("Error", res["msg"]);
+          return
+        }
+
+        // success promo - redirect to homepage with paymentsuccess=success
+        console.log("PROMO SUCCESS!");
+        this.state.videomailClient.submit();
+
+
+      }
+    );
   }
 
   sendEmailJS() {
@@ -348,6 +414,15 @@ export default class Video extends Component {
   }
 
    async redirectToStripe ()  {
+
+     if (this.state.stripeID===""){
+       console.log("stripe id is empty, assume successful promo code application");
+       // TODO: doesn't pull up modal
+       navigate('/?PaymentStatus=success');
+       return
+     }
+
+
     console.log("doing stripe!", price);
     console.log("test mode?", this.props.testMode);
 
@@ -355,20 +430,20 @@ export default class Video extends Component {
     const stripe = await stripePromise;
 
     // testing session id:
-    // const { error } = await stripe.redirectToCheckout(
-    //    {sessionId:"cs_live_b0oxAUOmuMuG5jAmatw7aCF2jWC14aGH1nOS1ZhKrs6FGrKcgmEIiNpta8"}
-    //  );
+    const { error } = await stripe.redirectToCheckout(
+       {sessionId:this.state.stripeID}
+     );
 
 
-     const { error } = await stripe.redirectToCheckout({
-      lineItems: [{
-        price: price,
-        quantity: 1,
-      }],
-      mode: 'payment',
-      successUrl: url+'?PaymentStatus=success',
-      cancelUrl: url+'?PaymentStatus=fail',
-    });
+    //  const { error } = await stripe.redirectToCheckout({
+    //   lineItems: [{
+    //     price: price,
+    //     quantity: 1,
+    //   }],
+    //   mode: 'payment',
+    //   successUrl: url+'?PaymentStatus=success',
+    //   cancelUrl: url+'?PaymentStatus=fail',
+    // });
     console.log("stripe error",error);
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer

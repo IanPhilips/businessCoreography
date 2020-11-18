@@ -14,11 +14,11 @@ import right from "../assets/images/Right side.jpg";
 import config from '../../config';
 import { navigate } from 'gatsby'
 //TODO: check node environment and switch vars appropriately
-// const url="https://www.virtualbycfb.com";
-// const SITE_NAME= "virtualbycfb";
+const url="https://www.virtualbycfb.com";
+const SITE_NAME= "virtualbycfb";
 const API="https://us-central1-long-ratio-295321.cloudfunctions.net/CreateSession"
-const url="https://localhost:8443";
-const SITE_NAME= "videomail-client-demo";
+// const url="https://localhost:8443";
+// const SITE_NAME= "videomail-client-demo";
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
 // let stripePromise = loadStripe('pk_test_51H0C4qF6ssRQC0xGIM11rZZXv7p1kMPWBQ0Lrc9TUjszV1l9Wj5E9Gzez1Luva9ceKF6HzGbZDJQFewe1dNsUjzX00STSIxSk1');

@@ -417,8 +417,9 @@ export default class Video extends Component {
 
      if (this.state.stripeID===""){
        console.log("stripe id is empty, assume successful promo code application");
-       // TODO: doesn't pull up modal
-       navigate('/?PaymentStatus=success');
+       this.setState({stage:0},
+        ()=> navigate('/?PaymentStatus=success')
+       )
        return
      }
 

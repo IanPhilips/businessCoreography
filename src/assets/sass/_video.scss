@@ -95,9 +95,13 @@ section.video {
         margin: 20px;
         //box-shadow: transparent;
     }
-    .buttons .submit {
-        display: none !important;
-    }
+    // .buttons .submit {
+    //     display: none !important;
+    // }
+    // .buttons .pause {
+    //     display: none !important;
+    // }
+    
     .videomail{
         min-width:640px;
         @media(max-width: 700px) {
@@ -116,6 +120,11 @@ section.video {
         opacity: 1;
         color:black;
         text-shadow: 0 0 100px #fff;
+    }
+    .userMedia{
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
 }

@@ -14,11 +14,11 @@ import right from "../assets/images/Right side.jpg";
 import config from '../../config';
 import { navigate } from 'gatsby'
 //TODO: check node environment and switch vars appropriately
-const url="https://www.virtualbycfb.com";
-const SITE_NAME= "virtualbycfb";
+// const url="https://www.virtualbycfb.com";
+// const SITE_NAME= "virtualbycfb";
 const API="https://us-central1-long-ratio-295321.cloudfunctions.net/CreateSession"
-// const url="https://localhost:8443";
-// const SITE_NAME= "videomail-client-demo";
+const url="https://localhost:8443";
+const SITE_NAME= "videomail-client-demo";
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
 // let stripePromise = loadStripe('pk_test_51H0C4qF6ssRQC0xGIM11rZZXv7p1kMPWBQ0Lrc9TUjszV1l9Wj5E9Gzez1Luva9ceKF6HzGbZDJQFewe1dNsUjzX00STSIxSk1');
@@ -90,7 +90,6 @@ export default class Video extends Component {
         siteName:SITE_NAME,
         text:{
           buttons:{
-            pause:'Stop',
             preview:'Next'
           }
         }
@@ -199,18 +198,18 @@ export default class Video extends Component {
           <h3 className={"unbold"}>Tell me about your ...</h3>
         </div>
         <div className={"col-12 col-md-4 col-xl-4"}>
-          <button  className={"text-white btn cram-words"} onClick={()=>this.setState({stage:2, topic:"Tell me about your favorite sport/activity" })}>
+          <button  className={"text-white btn cram-words"} onClick={()=>this.setState({stage:2, topic:"Tell me about your current role" })}>
+            Current Role
+          </button>
+        </div>
+        <div className={"col-12 col-md-4 col-xl-4"}>
+          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Tell me about your company" })}>
+            Company
+          </button>
+        </div>
+        <div className={"col-12 col-md-4 col-xl-4"}>
+          <button  className={"text-white btn cram-words"} onClick={()=>this.setState({stage:2, topic:"Tell me about your favorite activity" })}>
             Favorite Activity
-          </button>
-        </div>
-        <div className={"col-12 col-md-4 col-xl-4"}>
-          <button  className={"text-white btn"} onClick={()=>this.setState({stage:2, topic:"Give me your elevator pitch" })}>
-            company
-          </button>
-        </div>
-        <div className={"col-12 col-md-4 col-xl-4"}>
-          <button  className={"text-white btn cram-words"} onClick={()=>this.setState({stage:2, topic:"Describe your favorite recent meal" })}>
-            favorite meal
           </button>
         </div>
       </div>
@@ -401,7 +400,8 @@ export default class Video extends Component {
       {
         name:this.state.name,
         email:this.state.email,
-        videomail_url: this.state.videomailURL
+        videomail_url: this.state.videomailURL,
+        promo_code:this.state.promo
       },
       config.emailjsUserID)
       .then((result) => {

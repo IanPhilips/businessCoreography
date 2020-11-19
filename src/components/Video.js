@@ -12,7 +12,6 @@ import vid from '../assets/videos/VPAIntro_compressed.mp4';
 import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
 import config from '../../config';
-import { navigate } from 'gatsby'
 
 let url="https://www.virtualbycfb.com";
 let SITE_NAME= "virtualbycfb";
@@ -32,6 +31,7 @@ export default class Video extends Component {
     stage: 0,
     topic:"Sports / Activities",
     videomailClient:null,
+    videomailShowing:false,
     email:"",
     name:"",
     promo:"",
@@ -50,7 +50,7 @@ export default class Video extends Component {
     this.redirectToStripe = this.redirectToStripe.bind(this);
     this.sendEmailJS = this.sendEmailJS.bind(this);
     this.submitPromoToBackend = this.submitPromoToBackend.bind(this);
-    this.handleFormSubmissionExtras = this.handleFormSubmissionExtras.bind(this);
+    this.handleFormSubmission = this.handleFormSubmission.bind(this);
   }
 
   // changes to state
@@ -312,7 +312,6 @@ export default class Video extends Component {
                 <input type="submit"  value="Checkout"
                        className="text-white mt-3 btn"
                        style={{width:"200px"}}
-                       onClick={this.handleFormSubmissionExtras}
                 />
               </div>
 
@@ -332,9 +331,10 @@ export default class Video extends Component {
   }
 
 // >mailchimp > backend > emailjs > stripe
-  async handleFormSubmissionExtras(){
-    if (this.state.name==="" || this.state.email===""){
+  async handleFormSubmission(e){
+    e.preventDefault();
 
+    if (this.state.name==="" || this.state.email===""){
       return;
     }
 
@@ -420,11 +420,10 @@ export default class Video extends Component {
 
      if (this.state.stripeID===""){
        console.log("stripe id is empty, assume successful promo code application");
-       // Todo: test if modal pops up
-       this.state.videomailClient.startOver();
-       this.setState({stage:0},
-        ()=> navigate('/?PaymentStatus=success')
-       );
+       document.getElementById("videoSubmission").reset();
+       // this.state.videomailClient.startOver(); // throws error
+       this.props.toggleParentModal("Video Received");
+       this.setState({stage:0});
        return
      }
 
@@ -462,11 +461,13 @@ export default class Video extends Component {
 
   // Must render this at top level (not via step#) or videomail won't load properly!
   conditionallyRenderVideoMail(){
-    if (this.state.videomailClient!=null && this.state.stage===2){
-      this.state.videomailClient.show();
+    if (this.state.videomailClient!=null && this.state.stage===2 && !this.state.videomailShowing){
+      this.setState({videomailShowing:true},
+        this.state.videomailClient.show)
     }
-    if (this.state.videomailClient!=null && this.state.stage!==2){
-      this.state.videomailClient.hide();
+    if (this.state.videomailClient!=null && this.state.stage!==2 && this.state.videomailShowing){
+      this.setState({videomailShowing:false},
+        this.state.videomailClient.hide)
     }
     return(
       <div className={"row d-flex justify-content-center  "}>
@@ -543,8 +544,7 @@ export default class Video extends Component {
 
         <MDBCard className={"video-card text-center"}>
           <form className="contact-form text-right" id={"videoSubmission"}
-                // onSubmit={this.redirectToStripe}
-                onSubmit={this.stopDefault}
+                onSubmit={this.handleFormSubmission}
             >
 
           {this.conditionallyRenderVideoMail()}
@@ -557,7 +557,5 @@ export default class Video extends Component {
     )
 
   }
-  stopDefault(e){
-    e.preventDefault();
-  }
+
 }

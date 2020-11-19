@@ -19,10 +19,11 @@ import colleagues from "../assets/img/colleagues_icon.png";
 import hands from "../assets/img/trust_icon.png";
 import target from "../assets/img/target_icon.png";
 import attention from "../assets/img/attention_icon.png"
+import attention_red from "../assets/img/attention_icon_red.png"
 import summary from "../assets/img/summary_icon.png"
-import metrics from "../assets/img/Metrics_icon.png"
+import metrics from "../assets/img/metrics_icon.png"
 import score from "../assets/img/score_icon.png"
-import recommendation from "../assets/img/Recommendations_icon.png"
+import recommendation from "../assets/img/recommendations_icon.png"
 import vote from "../assets/img/vote_icon.png"
 import video from "../assets/img/video_icon.png"
 import assessment from "../assets/images/assessment.png";
@@ -59,13 +60,6 @@ class IndexPage extends Component{
 
   componentDidMount() {
     this.showModalWithParams();
-  }
-
-  componentDidUpdate(prevProps){
-    if (prevProps.location.href !== this.props.location.href) {
-      console.log("updating!!");
-      this.showModalWithParams();
-    }
   }
 
   showModalWithParams(){
@@ -585,7 +579,7 @@ class IndexPage extends Component{
       if (message===this.defaultMessage){
         message="Oops! The payment didn't go through";
       }
-      icon=attention;
+      icon=attention_red;
     }
     // t&c
     else if (title===this.modalTitles[3]){

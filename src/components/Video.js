@@ -21,7 +21,6 @@ if (process.env.NODE_ENV === "development"){
   url="https://localhost:8443";
   SITE_NAME= "videomail-client-demo";
 }
-const PROMO_SUCCESS_KEY="Success";
 const API="https://us-central1-long-ratio-295321.cloudfunctions.net/CreateSession"
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
@@ -374,7 +373,7 @@ export default class Video extends Component {
       {
         console.log("backend result: ", res)
         // go to stripe
-        if (res["id"]!=''){
+        if (res["id"]!==''){
             this.setState({
               stripeID:res["id"]
             },
@@ -382,10 +381,11 @@ export default class Video extends Component {
           return
         }
         // error
-        else if (res["error"]!=''){
+        else if (res["error"]!==''){
           this.props.toggleParentModal("Error", res["msg"]);
           return
         }
+
 
         // success promo - redirect to homepage with paymentsuccess=success
         console.log("PROMO SUCCESS!");
@@ -420,12 +420,13 @@ export default class Video extends Component {
 
      if (this.state.stripeID===""){
        console.log("stripe id is empty, assume successful promo code application");
+       // Todo: test if modal pops up
+       this.state.videomailClient.startOver();
        this.setState({stage:0},
         ()=> navigate('/?PaymentStatus=success')
-       )
+       );
        return
      }
-
 
     console.log("doing stripe!", price);
     console.log("test mode?", this.props.testMode);
@@ -438,20 +439,10 @@ export default class Video extends Component {
        {sessionId:this.state.stripeID}
      );
 
-
-    //  const { error } = await stripe.redirectToCheckout({
-    //   lineItems: [{
-    //     price: price,
-    //     quantity: 1,
-    //   }],
-    //   mode: 'payment',
-    //   successUrl: url+'?PaymentStatus=success',
-    //   cancelUrl: url+'?PaymentStatus=fail',
-    // });
-    console.log("stripe error",error);
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer
     // using `error.message`.
+    console.log("stripe error",error);
   };
 
 

@@ -53,6 +53,7 @@ section.video {
     .intro-video{
         height:100%;
         width:100%;
+        max-width: 900px;
         object-fit:cover;
     }
     .video-curtain{
@@ -95,13 +96,13 @@ section.video {
         margin: 20px;
         //box-shadow: transparent;
     }
-    // .buttons .submit {
-    //     display: none !important;
-    // }
-    // .buttons .pause {
-    //     display: none !important;
-    // }
-    
+     .buttons .submit {
+         display: none !important;
+     }
+     .buttons .pause {
+         display: none !important;
+     }
+
     .videomail{
         min-width:640px;
         @media(max-width: 700px) {

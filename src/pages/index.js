@@ -12,9 +12,9 @@ import Video from '../components/Video';
 import { Slide, Fade } from "react-awesome-reveal";
 
 import config from '../../config';
-import badLighting from "../assets/images/Bad lighting.png";
-import tooClose from "../assets/images/Lens too close.png";
-import tooHigh from "../assets/images/Lens too high.png";
+import badLighting from "../assets/images/Bad lighting_sized.png";
+import tooClose from "../assets/images/Lens too close_sized.png";
+import tooHigh from "../assets/images/Lens too high_sized.png";
 import colleagues from "../assets/img/colleagues_icon.png";
 import hands from "../assets/img/trust_icon.png";
 import target from "../assets/img/target_icon.png";

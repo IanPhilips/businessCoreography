@@ -8,7 +8,7 @@ import { Slide, Fade } from "react-awesome-reveal";
 
 import dollars from '../assets/images/150dollars.png';
 import hours from '../assets/images/24HOURS.png';
-import vid from '../assets/videos/VPAIntro_compressed.mp4';
+import vid from '../assets/videos/VPAFinal_compressed.mp4';
 import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
 import config from '../../config';

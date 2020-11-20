@@ -7,7 +7,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-anchor-links',
+    `gatsby-plugin-smoothscroll`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -19,6 +19,8 @@ module.exports = {
         display: config.manifestDisplay,
         icon: config.manifestIcon, // This path is relative to the root of the site.
       },
+    },
+    {
       resolve: 'gatsby-plugin-mailchimp',
       options: {
         endpoint: 'https://choreographyforbusiness.us15.list-manage.com/subscribe/post?u=46d46af5b635d2606d90c5de2&amp;id=7c054089b3', // string; add your MC list endpoint here; see instructions below

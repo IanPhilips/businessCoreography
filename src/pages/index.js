@@ -3,7 +3,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { AnchorLink } from "gatsby-plugin-anchor-links";
+import scrollTo from 'gatsby-plugin-smoothscroll';
 import {
   MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
 } from 'mdbreact';
@@ -108,17 +108,18 @@ class IndexPage extends Component{
         <h1 className={"text-center"}> Personalized Virtual Presence Assessment</h1>
 
         <div className={"row p-2 d-flex justify-content-center"} style={{marginTop:"1vh", fontSize:"22px"}}>
-          <h5 className={"my-auto text-center text-white"}>Improving </h5>
-          <h6 className={"mx-2 my-auto text-center p-2"} > Human Connection</h6>
-          <h5 className={"my-auto text-center text-white"}> Over Video </h5>
+          <h5 className={"my-auto text-center text-white"}>Improving Human Connection Over Video</h5>
+          {/*<h6 className={"mx-2 my-auto text-center p-2"} > Human Connection</h6>*/}
+          {/*<h5 className={"my-auto text-center text-white"}> Over Video </h5>*/}
         </div>
 
         <div className={"text-center row d-flex justify-content-center mt-5"} style={{width:"100%"}}>
-          <AnchorLink title={"GET MY ASSESSMENT"} className="nav-link" to="/#video" >
-          <b className={"btn"} style={{width:"350px"}} >
-           GET MY ASSESSMENT
-          </b>
-          </AnchorLink>
+          {/*<AnchorLink title={"GET MY ASSESSMENT"} className="nav-link" to="/#video" >*/}
+          {/*<b className={"btn"} style={{width:"350px"}} >*/}
+          {/* GET MY ASSESSMENT*/}
+          {/*</b>*/}
+          {/*</AnchorLink>*/}
+          <button className={"btn"}  onClick={() => scrollTo('#video')} style={{width:"350px"}}>GET MY ASSESSMENT</button>
         </div>
       </div>
       </div>

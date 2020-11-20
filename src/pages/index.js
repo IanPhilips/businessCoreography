@@ -109,17 +109,16 @@ class IndexPage extends Component{
 
         <div className={"row p-2 d-flex justify-content-center"} style={{marginTop:"1vh", fontSize:"22px"}}>
           <h5 className={"my-auto text-center text-white"}>Improving Human Connection Over Video</h5>
-          {/*<h6 className={"mx-2 my-auto text-center p-2"} > Human Connection</h6>*/}
-          {/*<h5 className={"my-auto text-center text-white"}> Over Video </h5>*/}
         </div>
 
         <div className={"text-center row d-flex justify-content-center mt-5"} style={{width:"100%"}}>
-          {/*<AnchorLink title={"GET MY ASSESSMENT"} className="nav-link" to="/#video" >*/}
-          {/*<b className={"btn"} style={{width:"350px"}} >*/}
-          {/* GET MY ASSESSMENT*/}
-          {/*</b>*/}
-          {/*</AnchorLink>*/}
-          <button className={"btn"}  onClick={() => scrollTo('#video')} style={{width:"350px"}}>GET MY ASSESSMENT</button>
+          <button className={"btn"} id={"assessmentButton"}
+                  onClick={() =>
+                  {
+                    scrollTo('#video');
+                    document.getElementById("assessmentButton").blur();
+                  }}
+                  style={{width:"350px"}}>GET MY ASSESSMENT</button>
         </div>
       </div>
       </div>

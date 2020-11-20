@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import config from '../../config';
-import { AnchorLink } from "gatsby-plugin-anchor-links";
+import {Link} from "gatsby"
 import icon from '../assets/img/website-icon.png';
 
 export default class Header extends Component {
@@ -12,10 +12,10 @@ export default class Header extends Component {
         id="mainNav"
       >
         <div className="container-fluid">
-          <AnchorLink title={config.siteTitle} className="navbar-brand " to="/"  >
+          <Link title={config.siteTitle} className="navbar-brand " to="/"  >
           <img className={"brand-icon"} src={icon} alt={""} />
               {config.siteTitle}
-          </AnchorLink>
+          </Link>
         </div>
       </nav>
 

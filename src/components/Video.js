@@ -81,7 +81,7 @@ export default class Video extends Component {
       const videomailClient = new window.VideomailClient({        // instantiate with some options
         verbose:       true,
         video:{width:width, height: height, fps:20, limitSeconds:60},
-        audio:{enabled:true},
+        audio:{enabled:true, bufferSize:512},
         selectors:{
           formId:'videoSubmission',
         },

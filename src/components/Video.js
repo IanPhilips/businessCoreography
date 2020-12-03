@@ -20,6 +20,8 @@ if (process.env.NODE_ENV === "development"){
   url="https://localhost:8443";
   SITE_NAME= "videomail-client-demo";
 }
+
+const BUFFER_SIZE = 2048;
 const API="https://us-central1-long-ratio-295321.cloudfunctions.net/CreateSession"
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
@@ -81,7 +83,7 @@ export default class Video extends Component {
       const videomailClient = new window.VideomailClient({        // instantiate with some options
         verbose:       true,
         video:{width:width, height: height, fps:20, limitSeconds:60},
-        audio:{enabled:true, bufferSize:512},
+        audio:{enabled:true, bufferSize:BUFFER_SIZE},
         selectors:{
           formId:'videoSubmission',
         },
@@ -145,7 +147,7 @@ export default class Video extends Component {
             1.  Select a Prompt
             <br/>
             <br/>
-            2. Record your 30-60 second video
+            2. Record your 30-60 second video (Don’t worry - you’ll have a chance to re-record!)
             <br/>
             <br/>
             3. Enter your details and payment
@@ -525,7 +527,7 @@ export default class Video extends Component {
     return(
       <div className={"col-lg-9 mx-auto"}>
         <Helmet>
-          <script src="https://cdn.rawgit.com/binarykitchen/videomail-client/2.14.2/prototype/js/videomail-client.min.js" />
+          <script src="https://cdn.rawgit.com/binarykitchen/videomail-client/2.14.5/prototype/js/videomail-client.min.js" />
 
         </Helmet>
 

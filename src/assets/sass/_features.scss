@@ -48,4 +48,28 @@ section.features {
         width:50px;
         margin-bottom:15px
     }
+
+    .good-feature{
+        .feature-item {
+            max-width: 400px;
+            height: 280px;
+            text-align: center;
+            box-shadow: -.4em -.4em 0 $theme-secondary;
+            border-radius: 5px;
+            background-color: $theme-tertiary;
+        }
+        .card-image{
+            margin-left: 15px;
+            margin-right: 10px;
+            width: 90%;
+            height: 205px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .card-notes{
+            height:20px;
+            max-height: 30px;
+            margin-top: 10px;
+        }
+    }
 }

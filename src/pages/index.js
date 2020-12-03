@@ -15,6 +15,7 @@ import config from '../../config';
 import badLighting from "../assets/images/Bad lighting_sized.png";
 import tooClose from "../assets/images/Lens too close_sized.png";
 import tooHigh from "../assets/images/Lens too high_sized.png";
+import justRight from "../assets/images/RoomToBreathCentered.png";
 import colleagues from "../assets/img/colleagues_icon.png";
 import hands from "../assets/img/trust_icon.png";
 import target from "../assets/img/target_icon.png";
@@ -22,7 +23,6 @@ import attention from "../assets/img/attention_icon.png"
 import attention_red from "../assets/img/attention_icon_red.png"
 import summary from "../assets/img/summary_icon.png"
 import metrics from "../assets/img/metrics_icon.png"
-import score from "../assets/img/score_icon.png"
 import recommendation from "../assets/img/recommendations_icon.png"
 import vote from "../assets/img/vote_icon.png"
 import video from "../assets/img/video_icon.png"
@@ -191,40 +191,41 @@ class IndexPage extends Component{
           <h3>Virtual Presence Skills Allow You To ...</h3>
         </div>
         <div className="col-lg-12 my-auto">
-          <div className="row">
-
-                <div className="col-lg-3">
-                <Fade triggerOnce delay={0} >
-                  <div className="feature-item">
-                    <img className={"card-image"} src={colleagues} alt={""}  />
-                    <p className="card-notes">More deeply communicate with your colleagues</p>
-                  </div>
-                </Fade>
-                </div>
-
-                <div className="col-lg-3">
-                  <Fade triggerOnce delay={400} >
-                  <div className="feature-item">
-                    <img className={"card-image"} src={hands} alt={""} />
-                    <p className="card-notes">
-                     Develop trusting relationships wth your clients
-                    </p>
-                  </div>
-                  </Fade>
-                </div>
-
-                <div className="col-lg-3">
+          <div className="row mt-5">
+            <div className="col-lg-6 my-auto">
+              <div className="row">
+                <div className="col-lg-6">
+                    <Fade triggerOnce delay={0} >
+                      <div className="feature-item">
+                        <img className={"card-image"} src={colleagues} alt={""}  />
+                        <p className="card-notes">More deeply communicate with your colleagues</p>
+                      </div>
+                    </Fade>
+                    </div>
+                    <div className="col-lg-6">
+                      <Fade triggerOnce delay={400} >
+                      <div className="feature-item">
+                        <img className={"card-image"} src={hands} alt={""} />
+                        <p className="card-notes">
+                         Develop trusting relationships wth your clients
+                        </p>
+                      </div>
+                      </Fade>
+                    </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6">
                   <Fade triggerOnce delay={800} >
-                  <div className="feature-item">
-                    <img className={"card-image"} src={target} alt={""}/>
-                    <p className="card-notes">
-                      Manage your own energy and focus
-                    </p>
-                  </div>
+                    <div className="feature-item">
+                      <img className={"card-image"} src={target} alt={""}/>
+                      <p className="card-notes">
+                        Manage your own energy and focus
+                      </p>
+                    </div>
                   </Fade>
                 </div>
 
-                <div className="col-lg-3">
+                <div className="col-lg-6">
                   <Fade triggerOnce delay={1200} >
                     <div className="feature-item">
                       <img className={"card-image"} src={attention} alt={""}/>
@@ -234,6 +235,20 @@ class IndexPage extends Component{
                     </div>
                   </Fade>
                 </div>
+              </div>
+
+            </div>
+                <div className="col-lg-6 my-auto good-feature justify-content-center align-content-center d-flex">
+                  <Fade className={""} triggerOnce delay={800} >
+                    <MDBCard className="feature-item">
+                      <h5>Virtual Presence Best Practices</h5>
+                      <p className="card-notes">
+                      </p>
+                      <img src={justRight} alt={"Lens Too Close"} className={"card-image"} />
+                    </MDBCard>
+                  </Fade>
+                </div>
+
         </div>
         </div>
       </div>
@@ -293,18 +308,7 @@ class IndexPage extends Component{
                 </Slide>
               </div>
             </div>
-            <div className="row">
-              <div className="col-lg-6 mb-5">
-                <Slide triggerOnce delay={0} direction={"left"}  className={"h-100"} >
-                  <MDBCard className={"feature-item"}>
-                    <h3> Score </h3>
-                    <MDBCardBody >
-                      Your overall Virtual Presence Score
-                    </MDBCardBody>
-                    <img className={"card-image my-auto mx-auto"} src={score} alt={""} />
-                  </MDBCard>
-                </Slide>
-              </div>
+            <div className="row d-flex align-content-center justify-content-center">
               <div className="col-lg-6 mb-5">
                 <Slide triggerOnce delay={0} direction={"right"}  className={"h-100"} >
                   <MDBCard className={"feature-item"}>
@@ -380,7 +384,7 @@ class IndexPage extends Component{
                   Rachel Cossar is the author of
                   <a href={"https://choreographyforbusiness.com/ebook"}> When You Can’t Meet in Person - A Guide to Mastering Virtual Presence and Communication. </a>
                   Her work and firm are featured in
-                  <a href={" https://www.youtube.com/watch?v=zchEneW2890"}> HBR</a>,
+                  <a href={" https://www.youtube.com/watch?v=zchEneW2890"}> Harvard Business Review</a>,
                     <a href={"https://www.bostonglobe.com/2020/06/15/business/four-public-speaking-coaches-have-tips-sprucing-up-your-zoom-meetings/"} > Boston Globe </a> and
                   <a href={"https://www.psychologytoday.com/us/blog/spycatcher/202003/tips-improving-communication-during-video-conferencing\n"} > Psychology Today </a>.
                 </MDBCardBody>

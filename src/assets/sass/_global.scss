@@ -62,7 +62,7 @@ h5{
     font-size: 22px;
     color: $theme-text;
     font-weight: 500;
-    text-transform: capitalize;
+    //text-transform: capitalize;
 }
 h6{
     @include body-font;

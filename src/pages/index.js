@@ -24,6 +24,7 @@ import attention_red from "../assets/img/attention_icon_red.png"
 import summary from "../assets/img/summary_icon.png"
 import metrics from "../assets/img/metrics_icon.png"
 import recommendation from "../assets/img/recommendations_icon.png"
+import score from "../assets/img/score_icon.png"
 import vote from "../assets/img/vote_icon.png"
 import video from "../assets/img/video_icon.png"
 import assessment from "../assets/images/assessment.png";
@@ -308,7 +309,9 @@ class IndexPage extends Component{
                 </Slide>
               </div>
             </div>
-            <div className="row d-flex align-content-center justify-content-center">
+
+            <div className="row">
+
               <div className="col-lg-6 mb-5">
                 <Slide triggerOnce delay={0} direction={"right"}  className={"h-100"} >
                   <MDBCard className={"feature-item"}>
@@ -316,10 +319,23 @@ class IndexPage extends Component{
                     <MDBCardBody >
                       Suggestions for immediate improvement to your virtual presence
                     </MDBCardBody>
+                    <img className={"card-image my-auto mx-auto"} src={score} alt={""} />
+                  </MDBCard>
+                </Slide>
+              </div>
+
+              <div className="col-lg-6 mb-5">
+                <Slide triggerOnce delay={0} direction={"right"}  className={"h-100"} >
+                  <MDBCard className={"feature-item"}>
+                    <h3> Debrief with Rachel  </h3>
+                    <MDBCardBody >
+                      Suggestions for immediate improvement to your virtual presence
+                    </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={recommendation} alt={""} />
                   </MDBCard>
                 </Slide>
               </div>
+
             </div>
           </div>
         </div>

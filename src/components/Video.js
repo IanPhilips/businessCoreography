@@ -153,7 +153,7 @@ export default class Video extends Component {
             3. Enter your details and payment
             <br/>
             <br/>
-            4. Receive your Virtual Presence Assessment in 24 hours
+            4. Receive your Virtual Presence Assessment in 24 hours and link to schedule debrief
           </h5>
           <br/><br/><br/>
           <b style={{cursor:"pointer", textDecoration:"underline"}} onClick={()=>this.props.toggleParentModal("Terms & Conditions")} className={"mt-5"}>Terms & Conditions</b>

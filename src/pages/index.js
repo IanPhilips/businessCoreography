@@ -329,8 +329,8 @@ class IndexPage extends Component{
                   <MDBCard className={"feature-item"}>
                     <h3> Debrief with Rachel  </h3>
                     <MDBCardBody >
-                      Suggestions for immediate improvement to your virtual presence
-                    </MDBCardBody>
+                      Complimentary post-assessment debrief to go over feedback and recommendations. 
+                   </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={recommendation} alt={""} />
                   </MDBCard>
                 </Slide>

@@ -7,7 +7,10 @@ import '../assets/sass/new-age.scss';
 
 class Layout extends Component {
   render() {
-    const { children } = this.props;
+    const { children, image:metaImage} = this.props;
+    const image=metaImage && metaImage.src ? `${site.siteMetadata.siteUrl}${metaImage.src}` : null;
+    let meta =[];
+  const description = 'Improving Human Connection Over Video';
     return (
       <StaticQuery
         query={graphql`
@@ -19,15 +22,68 @@ class Layout extends Component {
             }
           }
         `}
+
         render={data => (
           <>
+
 
             <Helmet
               title={data.site.siteMetadata.title}
               meta={[
-                { name: 'description', content: 'Casual' },
-                { name: 'keywords', content: 'site, web' },
-              ]}
+                {
+                  name: `description`,
+                  content: description,
+                },
+                { name: 'keywords', content: 'coreography, video chat, zoom, business coreography' },
+                {
+                  property: `og:title`,
+                  content: data.site.siteMetadata.title,
+                },
+                {
+                  property: `og:description`,
+                  content: description,
+                },
+                {
+                  property: `og:type`,
+                  content: `website`,
+                },
+                {
+                  name: `twitter:title`,
+                  content: data.site.siteMetadata.title,
+                },
+                {
+                  name: `twitter:description`,
+                  content: description,
+                },
+              ]
+                .concat(
+                  metaImage
+                    ? [
+                      {
+                        property: "og:image",
+                        content: image,
+                      },
+                      {
+                        property: "og:image:width",
+                        content: 1362,
+                      },
+                      {
+                        property: "og:image:height",
+                        content: 805,
+                      },
+                      {
+                        name: "twitter:card",
+                        content: "summary_large_image",
+                      },
+                    ]
+                    : [
+                      {
+                        name: "twitter:card",
+                        content: "summary",
+                      },
+                    ]
+                )
+                .concat(meta)}
 
             >
               <html lang="en" />
@@ -46,6 +102,11 @@ Layout.propTypes = {
   noHeader: PropTypes.bool,
   noSiteHeader: PropTypes.bool,
   activeLink: PropTypes.string,
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+  }),
 };
 
 export default Layout;

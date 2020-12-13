@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { StaticQuery, graphql } from 'gatsby';
-
 import '../assets/sass/new-age.scss';
 
 class Layout extends Component {
   render() {
-    const { children, image:metaImage} = this.props;
-    const image=metaImage && metaImage.src ? `${site.siteMetadata.siteUrl}${metaImage.src}` : null;
-    let meta =[];
-  const description = 'Improving Human Connection Over Video';
+    const { children} = this.props;
+  const description = 'Virtual Coreography for Business - Improving Human Connection Over Video by Rachel Cossar';
     return (
       <StaticQuery
         query={graphql`
@@ -18,10 +15,12 @@ class Layout extends Component {
             site {
               siteMetadata {
                 title
+                siteUrl:url
               }
             }
           }
         `}
+
 
         render={data => (
           <>
@@ -30,62 +29,22 @@ class Layout extends Component {
             <Helmet
               title={data.site.siteMetadata.title}
               meta={[
-                {
-                  name: `description`,
-                  content: description,
-                },
                 { name: 'keywords', content: 'coreography, video chat, zoom, business coreography' },
-                {
-                  property: `og:title`,
-                  content: data.site.siteMetadata.title,
-                },
-                {
-                  property: `og:description`,
-                  content: description,
-                },
-                {
-                  property: `og:type`,
-                  content: `website`,
-                },
-                {
-                  name: `twitter:title`,
-                  content: data.site.siteMetadata.title,
-                },
-                {
-                  name: `twitter:description`,
-                  content: description,
-                },
               ]
-                .concat(
-                  metaImage
-                    ? [
-                      {
-                        property: "og:image",
-                        content: image,
-                      },
-                      {
-                        property: "og:image:width",
-                        content: 1362,
-                      },
-                      {
-                        property: "og:image:height",
-                        content: 805,
-                      },
-                      {
-                        name: "twitter:card",
-                        content: "summary_large_image",
-                      },
-                    ]
-                    : [
-                      {
-                        name: "twitter:card",
-                        content: "summary",
-                      },
-                    ]
-                )
-                .concat(meta)}
+              }
 
             >
+              <meta property='og:image' content={"https://www.virtualbycfb.com/assessment.png"} />
+              <meta property='twitter:image' content={"https://www.virtualbycfb.com/assessment.png"} />
+              <meta property='og:image:width' content={1052} />
+              <meta property='og:image:height' content={1032} />
+              <meta property='description' content={description} />
+              <meta property='og:description' content={description} />
+              <meta property='twitter:description' content={description} />
+              <meta property='twitter:card' content={"summary_large_image"} />
+              <meta property='twitter:title' content={data.site.siteMetadata.title} />
+              <meta property='og:title' content={data.site.siteMetadata.title} />
+
               <html lang="en" />
             </Helmet>
             <div className={'page-top'}>{children}</div>

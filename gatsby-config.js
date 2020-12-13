@@ -4,7 +4,7 @@ module.exports = {
   pathPrefix: config.pathPrefix,
   siteMetadata: {
     title: config.siteTitle,
-    image:"assessment.png"
+    url:"https://www.virtualbycfb.com"
   },
   plugins: [
     'gatsby-plugin-react-helmet',

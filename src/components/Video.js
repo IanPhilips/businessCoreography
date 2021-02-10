@@ -7,7 +7,7 @@ import emailjs from 'emailjs-com';
 import { Slide, Fade } from "react-awesome-reveal";
 
 import dollars from '../assets/images/150dollars.png';
-import hours from '../assets/images/24HOURS.png';
+import team from '../assets/images/team_pricing.png';
 import vid from '../assets/videos/VPAFinal_compressed.mp4';
 import left from "../assets/images/Left side.jpg";
 import right from "../assets/images/Right side.jpg";
@@ -193,7 +193,11 @@ export default class Video extends Component {
 
         </div>
         <div className={"col-3"}>
-          <img src={hours} alt={""}  className={"img-fluid mb-5"}/>
+          <a style={{cursor:"pointer", textDecoration:"underline"}}
+             href="mailto:rachel@choreographyforbusiness.com"
+             className={""}>
+            <img src={team} alt={""}  className={"img-fluid mb-5"}/>
+          </a>
         </div>
       </div>
     )

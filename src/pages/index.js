@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import {
-  MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter,
+  MDBCard, MDBCardBody, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter, MDBRow,
 } from 'mdbreact';
 import emailjs from 'emailjs-com';
 import Video from '../components/Video';
@@ -30,6 +30,10 @@ import vote from "../assets/img/vote_icon.png"
 import video from "../assets/img/video_icon.png"
 import assessment from "../assets/images/assessment.png";
 import rachel from "../assets/images/Rachel Cossar.jpg";
+import quantilope from "../assets/images/quantilope logo.png";
+import bostonGlobe from "../assets/images/Boston Globe.png";
+import harvard from "../assets/images/Harvard Business Review.png";
+import psychology from "../assets/images/Psychology Today.png";
 import hero from '../assets/videos/Hero_Video.mp4';
 
 const emailjsContactPollID="template_ddrgc9o";
@@ -344,6 +348,25 @@ class IndexPage extends Component{
       </div>
     </section>
 
+    <section className="testimonial" id="testimonial" style={{paddingTop:"0"}}>
+      <MDBContainer>
+        <div className="row">
+          <div className="col-lg-9 mb-5 mx-auto text-left">
+            <MDBCard className={"p-3"}>
+                  <MDBCardBody className={""}>
+                  "Rachel showed us why virtual presence is so crucial in today's world. The results were amazing. Everyone on our sales team now feels more confident and present in front of the camera and
+                  is much more convincing when talking to customers."
+                    <br/>
+                    <br/>
+                    <strong> Johanna Verhoeven </strong>, Sales Enablement Manager
+                  </MDBCardBody>
+
+                  <img className={"card-image my-auto mx-auto "} src={quantilope} alt={""} />
+            </MDBCard>
+          </div>
+        </div>
+      </MDBContainer>
+    </section>
 
     {/*VIDEO SUBMISSION*/}
     <section className="video" id="video">
@@ -402,11 +425,26 @@ class IndexPage extends Component{
                 <br/>
                   Rachel Cossar is the author of
                   <a href={"https://choreographyforbusiness.com/ebook"}> When You Can’t Meet in Person - A Guide to Mastering Virtual Presence and Communication. </a>
-                  Her work and firm are featured in
-                  <a href={" https://www.youtube.com/watch?v=zchEneW2890"}> Harvard Business Review</a>,
-                    <a href={"https://www.bostonglobe.com/2020/06/15/business/four-public-speaking-coaches-have-tips-sprucing-up-your-zoom-meetings/"} > Boston Globe </a> and
-                  <a href={"https://www.psychologytoday.com/us/blog/spycatcher/202003/tips-improving-communication-during-video-conferencing\n"} > Psychology Today </a>.
+                  Her work and firm are featured in Harvard Business Review, Boston Globe and Psychology Today.
                 </MDBCardBody>
+
+                <div className={"row text-center ml-5 mr-5"}>
+                  <div className={"col-4 my-auto"} >
+                    <a href={" https://www.youtube.com/watch?v=zchEneW2890"}>
+                    <img  className={"logo-img"} src={harvard} alt={"harvard logo"} style={{width:"100px", height:"auto"}} />
+                    </a>
+                  </div>
+                  <div className={"col-4 my-auto"}>
+                    <a href={"https://www.bostonglobe.com/2020/06/15/business/four-public-speaking-coaches-have-tips-sprucing-up-your-zoom-meetings/"} >
+                    <img className={"logo-img"} src={bostonGlobe} alt={"boston globe logo"}  style={{width:"175px", height:"auto"}}/>
+                    </a>
+                  </div>
+                  <div className={"col-4 my-auto"} >
+                    <a href={"https://www.psychologytoday.com/us/blog/spycatcher/202003/tips-improving-communication-during-video-conferencing\n"} >
+                    <img className={"logo-img"} src={psychology}  alt={"psychology today logo"} style={{width:"150px", height:"auto"}}/>
+                    </a>
+                  </div>
+                </div>
               </MDBCard>
           </div>
           <div className="col-lg-4">

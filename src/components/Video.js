@@ -21,7 +21,10 @@ if (process.env.NODE_ENV === "development"){
   SITE_NAME= "videomail-client-demo";
 }
 
-const BUFFER_SIZE = 2048;
+const VIDEOMAIL_URL="https://cdn.rawgit.com/binarykitchen/videomail-client/2.15.0/prototype/js/videomail-client.min.js";
+const BUFFER_SIZE = "auto";
+// good on chrome: 2048
+// good on firefox: 512, 1024, 2048
 const API="https://us-central1-long-ratio-295321.cloudfunctions.net/CreateSession"
 let price = "";
 let stripePromise = loadStripe('pk_live_51H0C4qF6ssRQC0xGxth5iYYDgTmvJW41Ll5ok6DVLmpvqv9IgWEfb1r3Ns9OhvjJyLZ5gfY5ECIj0atgMQjpaOqq004vy2fDoq');
@@ -40,7 +43,9 @@ export default class Video extends Component {
     stripeID:"",
     waitlist:false,
     videomailURL:null,
-    displayContinueButton:"none"
+    displayContinueButton:"none",
+    isFirefox:false,
+    seenAudioRecommendation:false
   };
 
   constructor(props) {
@@ -70,6 +75,7 @@ export default class Video extends Component {
   }
 
   componentDidMount() {
+
     this.engageTestModeAndSetPrice(this.props.testMode);
     let width=640, height=480;
     if (window.innerWidth<700){
@@ -77,7 +83,8 @@ export default class Video extends Component {
     }
 
     (async() => {
-      console.log("waiting for videomail client library");
+      console.log("waiting for videomail client library: ", VIDEOMAIL_URL);
+      console.log("with videomail buffer size: ", BUFFER_SIZE);
       while(window.VideomailClient === undefined) // define the condition as you like
         await new Promise(resolve => setTimeout(resolve, 500));
       const videomailClient = new window.VideomailClient({        // instantiate with some options
@@ -113,20 +120,23 @@ export default class Video extends Component {
         this.onStartedRecording.bind(videomailClient)
       )
 
+      const isFirefox = typeof InstallTrigger !== 'undefined';
+
       this.setState({
-        videomailClient:videomailClient
+        videomailClient:videomailClient,
+        isFirefox: isFirefox
       })
     })();
   }
 
   onStartedRecording(videomail){
-    console.log("started!");
+    // console.log("started!");
     if (this.state.displayContinueButton!=="none")
       this.setState({displayContinueButton:"none"})
   }
 
   onFinishedRecording(videomail){
-    console.log("finished!");
+    // console.log("finished!");
     if (this.state.displayContinueButton!=="unset")
       this.setState({displayContinueButton:"unset"})
   }
@@ -156,17 +166,20 @@ export default class Video extends Component {
             4. Receive your Virtual Presence Assessment in 24 hours and link to schedule debrief
           </h5>
           <br/><br/><br/>
-          <b style={{cursor:"pointer", textDecoration:"underline"}} onClick={()=>this.props.toggleParentModal("Terms & Conditions")} className={"mt-5"}>Terms & Conditions</b>
+          <b style={{cursor:"pointer", textDecoration:"underline"}} onClick={()=>this.props.toggleParentModal(this.props.modalTitles[3])} className={"mt-5"}>Terms & Conditions</b>
           <p style={{fontSize:"14px", color:"#818181"}} className={"mb-4"}>
             Your video and data are private and will not be shared with any third parties.
           </p>
 
           <div className={"d-flex justify-content-center align-content-center"}>
-          <button onClick={()=>this.setState({stage:1})}
-                  className={"text-white btn mt-3 btn-xl mx-auto" }>
-
-            AGREE & BEGIN
-          </button>
+            { this.state.isFirefox || this.state.seenAudioRecommendation ?
+            <button onClick={()=>this.setState({stage:1})} className={"text-white btn mt-3 btn-xl mx-auto" }>AGREE & BEGIN </button>
+            :
+            <button onClick={()=>{
+              this.setState({seenAudioRecommendation:true});
+              this.props.toggleParentModal(this.props.modalTitles[4]);
+            }} className={"text-white btn mt-3 btn-xl mx-auto" }>AGREE & BEGIN</button>
+            }
           </div>
 
 
@@ -326,7 +339,7 @@ export default class Video extends Component {
 
 // called after videomail is submitted, sends the emailjs link
   onVideomailSubmitted(videomail) {
-    console.log("On submit videomail", videomail);
+    // console.log("On submit videomail", videomail);
     this.setState({videomailURL:videomail.url},
       ()=>{this.sendEmailJS()}
       );
@@ -344,10 +357,10 @@ export default class Video extends Component {
     if (this.state.waitlist){
       mailchimpResponse = await this.signUpEmail(this.state.name, this.state.email)
     }
-    console.log("mailchimp response is:", mailchimpResponse["result"]);
+    // console.log("mailchimp response is:", mailchimpResponse["result"]);
 
     if (mailchimpResponse["result"]==="error"){
-      this.props.toggleParentModal("Error", mailchimpResponse["msg"])
+      this.props.toggleParentModal(this.props.modalTitles[2], mailchimpResponse["msg"])
     }
     else{
       this.submitPromoToBackend();
@@ -356,7 +369,7 @@ export default class Video extends Component {
   }
 
   submitPromoToBackend(){
-    console.log("submitting to backend");
+    // console.log("submitting to backend");
     fetch(API, {
     method: 'POST',
     headers: {
@@ -373,7 +386,7 @@ export default class Video extends Component {
   }).then(res=>res.json())
     .then(async res =>
       {
-        console.log("backend result: ", res)
+        // console.log("backend result: ", res)
         // go to stripe
         if (res["id"]!==''){
             this.setState({
@@ -384,13 +397,13 @@ export default class Video extends Component {
         }
         // error
         else if (res["error"]!==''){
-          this.props.toggleParentModal("Error", res["msg"]);
+          this.props.toggleParentModal(this.props.modalTitles[2], res["msg"]);
           return
         }
 
 
         // success promo - redirect to homepage with paymentsuccess=success
-        console.log("PROMO SUCCESS!");
+        // console.log("PROMO SUCCESS!");
         this.state.videomailClient.submit();
 
 
@@ -399,7 +412,7 @@ export default class Video extends Component {
   }
 
   sendEmailJS() {
-    console.log("email sent");
+    // console.log("email sent");
     emailjs.send(config.emailjsServiceID,
       emailjsVPARequestID,
       {
@@ -410,27 +423,27 @@ export default class Video extends Component {
       },
       config.emailjsUserID)
       .then((result) => {
-        console.log(result.text);
+        // console.log(result.text);
         this.redirectToStripe();
       }, (error) => {
-        console.log("EMAILJS ERROR:",error.text);
-        this.props.toggleParentModal("Error", error.text)
+        // console.log("EMAILJS ERROR:",error.text);
+        this.props.toggleParentModal(this.props.modalTitles[2], error.text)
       });
   }
 
    async redirectToStripe ()  {
 
      if (this.state.stripeID===""){
-       console.log("stripe id is empty, assume successful promo code application");
+       // console.log("stripe id is empty, assume successful promo code application");
        document.getElementById("videoSubmission").reset();
        // this.state.videomailClient.startOver(); // throws error
-       this.props.toggleParentModal("Video Received");
+       this.props.toggleParentModal(this.props.modalTitles[1]);
        this.setState({stage:0});
        return
      }
 
-    console.log("doing stripe!", price);
-    console.log("test mode?", this.props.testMode);
+    // console.log("doing stripe!", price);
+    // console.log("test mode?", this.props.testMode);
 
     // When the customer clicks on the button, redirect them to Checkout.
     const stripe = await stripePromise;
@@ -443,7 +456,7 @@ export default class Video extends Component {
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer
     // using `error.message`.
-    console.log("stripe error",error);
+    // console.log("stripe error",error);
   };
 
 
@@ -527,7 +540,7 @@ export default class Video extends Component {
     return(
       <div className={"col-lg-9 mx-auto"}>
         <Helmet>
-          <script src="https://cdn.rawgit.com/binarykitchen/videomail-client/2.14.5/prototype/js/videomail-client.min.js" />
+          <script src={VIDEOMAIL_URL}/>
 
         </Helmet>
 

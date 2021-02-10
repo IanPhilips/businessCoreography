@@ -21,6 +21,7 @@ import hands from "../assets/img/trust_icon.png";
 import target from "../assets/img/target_icon.png";
 import attention from "../assets/img/attention_icon.png"
 import attention_red from "../assets/img/attention_icon_red.png"
+import audio_red from "../assets/img/audio_icon.png"
 import summary from "../assets/img/summary_icon.png"
 import metrics from "../assets/img/metrics_icon.png"
 import recommendation from "../assets/img/recommendations_icon.png"
@@ -35,7 +36,7 @@ const emailjsContactPollID="template_ddrgc9o";
 
 class IndexPage extends Component{
 
-  modalTitles=["Vote Received", "Video Received", "Error", "Terms & Conditions"];
+  modalTitles=["Vote Received", "Video Received", "Error", "Terms & Conditions", "Audio Recommendation"];
   paymentStatusKey="PaymentStatus";
   priceCode="price";
   testModeCode="key";
@@ -44,14 +45,15 @@ class IndexPage extends Component{
 
   state = {
     radio: 1,
-    modal:false,
     modalSize:"sm",
     title:this.modalTitles[0],
     message:"",
     icon:video,
-    contactModal:false,
     price:null,
-    testMode:null
+    testMode:null,
+    modal:false,
+    contactModal:false,
+    browserModal:false,
   };
 
   constructor(props) {
@@ -329,7 +331,7 @@ class IndexPage extends Component{
                   <MDBCard className={"feature-item"}>
                     <h3> Debrief with Rachel  </h3>
                     <MDBCardBody >
-                      Complimentary post-assessment debrief to go over feedback and recommendations. 
+                      Complimentary post-assessment debrief to go over feedback and recommendations.
                    </MDBCardBody>
                     <img className={"card-image my-auto mx-auto"} src={recommendation} alt={""} />
                   </MDBCard>
@@ -351,6 +353,7 @@ class IndexPage extends Component{
         <div className="row equal">
           {this.state.price
             ? <Video toggleParentModal={this.toggleModal}
+                     modalTitles={this.modalTitles}
                      price={this.state.price}
                      testMode={this.state.testMode}
             />
@@ -432,7 +435,7 @@ class IndexPage extends Component{
     <section className="contact bg-secondary" id="contactline" style={{padding:"2px"}}>
     </section>
 
-    {/*STATUS MODAL*/}
+    {/*ONE BUTTON STATUS MODAL*/}
     <MDBContainer>
       <MDBModal
         isOpen={this.state.modal}
@@ -584,10 +587,13 @@ class IndexPage extends Component{
   toggleModal(title, message=this.defaultMessage){
     let icon = vote;
     let size = "sm";
+
     // default vote received
     if (title===this.modalTitles[0]){
       icon=vote;
     }
+
+    // video submitted
     else if (title===this.modalTitles[1]){
       message="Thank you for your submission - You will receive your tailored virtual presence assessment within 24 hours.";
       icon=video;
@@ -601,6 +607,7 @@ class IndexPage extends Component{
       }
       icon=attention_red;
     }
+
     // t&c
     else if (title===this.modalTitles[3]){
       message = "TERMS OF SERVICE\n" +
@@ -614,12 +621,25 @@ class IndexPage extends Component{
       size = "lg";
     }
 
+    // video submitted
+    else if (title===this.modalTitles[4]){
+      message="If you experience audio issues, try switching to Firefox.";
+      icon=audio_red;
+    }
+
+
     this.setState({
       modal: !this.state.modal,
       title:title,
       message:message,
       icon:icon,
       modalSize:size,
+    });
+  }
+
+  toggleBrowserModal(){
+    this.setState({
+      browserModal: !this.state.browserModal
     });
   }
 

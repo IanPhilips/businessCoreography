@@ -146,8 +146,8 @@ export default class Video extends Component {
   stepZero(){
     return(
       <div className={"row d-flex justify-content-center align-content-center"}>
-        <div className={"col-3"}>
-          <img src={dollars} alt={""} className={"img-fluid mb-5"}/>
+        <div className={"col-3 text-center"}>
+          <img src={dollars} alt={""} className={"img-fluid mb-5 img-cloud"}/>
         </div>
         <div className={"col-6 text-center "}>
           <h3 className={"mt-5"}> How This Works</h3>
@@ -192,11 +192,11 @@ export default class Video extends Component {
 
 
         </div>
-        <div className={"col-3"}>
+        <div className={"col-3 text-center"}>
           <a style={{cursor:"pointer", textDecoration:"underline"}}
              href="mailto:rachel@choreographyforbusiness.com"
              className={""}>
-            <img src={team} alt={""}  className={"img-fluid mb-5"}/>
+            <img src={team} alt={""}  className={"img-fluid mb-5 img-cloud"}/>
           </a>
         </div>
       </div>

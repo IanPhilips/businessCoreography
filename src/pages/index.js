@@ -354,8 +354,8 @@ class IndexPage extends Component{
           <div className="col-lg-9 mb-5 mx-auto text-left">
             <MDBCard className={"p-3"}>
                   <MDBCardBody className={""}>
-                  "Rachel showed us why virtual presence is so crucial in today's world. The results were amazing. Everyone on our sales team now feels more confident and present in front of the camera and
-                  is much more convincing when talking to customers."
+                  <i>"Rachel showed us why virtual presence is so crucial in today's world. The results were amazing. Everyone on our sales team now feels more confident and present in front of the camera and
+                    is much more convincing when talking to customers."</i>
                     <br/>
                     <br/>
                     <strong> Johanna Verhoeven </strong>, Sales Enablement Manager

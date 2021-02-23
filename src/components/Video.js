@@ -45,7 +45,6 @@ export default class Video extends Component {
     videomailURL:null,
     displayContinueButton:"none",
     isFirefox:false,
-    seenAudioRecommendation:false
   };
 
   constructor(props) {
@@ -121,6 +120,7 @@ export default class Video extends Component {
       )
 
       const isFirefox = typeof InstallTrigger !== 'undefined';
+      this.advanceStage = this.advanceStage.bind(this);
 
       this.setState({
         videomailClient:videomailClient,
@@ -139,6 +139,10 @@ export default class Video extends Component {
     // console.log("finished!");
     if (this.state.displayContinueButton!=="unset")
       this.setState({displayContinueButton:"unset"})
+  }
+
+  advanceStage(){
+    this.setState({stage:1})
   }
 
 
@@ -172,12 +176,12 @@ export default class Video extends Component {
           </p>
 
           <div className={"d-flex justify-content-center align-content-center"}>
-            { this.state.isFirefox || this.state.seenAudioRecommendation ?
-            <button onClick={()=>this.setState({stage:1})} className={"text-white btn mt-3 btn-xl mx-auto" }>AGREE & BEGIN </button>
-            :
+            {
             <button onClick={()=>{
-              this.setState({seenAudioRecommendation:true});
-              this.props.toggleParentModal(this.props.modalTitles[4]);
+              this.props.toggleParentModal(this.props.modalTitles[4],
+                "",
+                this.advanceStage
+              );
             }} className={"text-white btn mt-3 btn-xl mx-auto" }>AGREE & BEGIN</button>
             }
           </div>

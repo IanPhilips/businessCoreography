@@ -57,7 +57,7 @@ class IndexPage extends Component{
     testMode:null,
     modal:false,
     contactModal:false,
-    browserModal:false,
+    toggleModalCallback:null,
   };
 
   constructor(props) {
@@ -483,9 +483,13 @@ class IndexPage extends Component{
       >
         <h5 className={"m-3 text-center"}> {this.state.title}</h5>
         <MDBModalBody className={"m-3 text-center"}>
-          <div className={"mb-3"}> { ReactHtmlParser (this.state.message) } </div>
+          <div className={"mb-3"}> { ReactHtmlParser (this.state.modal ? this.state.message : "") } </div>
           <br/>
-          <img src={this.state.icon} alt={"bad lighting"} width={"40px"} />
+          {this.state.modal ?
+            <img src={this.state.icon} alt={"icon"} width={"40px"} />
+            :
+            <div/>
+          }
 
         </MDBModalBody>
         <MDBModalFooter className={"align-content-center justify-content-center "}>
@@ -622,35 +626,35 @@ class IndexPage extends Component{
   }
 
   defaultMessage="Elevating your virtual presence will help solve this challenge. Continue on to take your assessment.";
-  toggleModal(title, message=this.defaultMessage){
+  toggleModal(title, message=this.defaultMessage, callback=null){
     let icon = vote;
     let size = "sm";
 
     // default vote received
-    if (title===this.modalTitles[0]){
-      icon=vote;
+    if (title === this.modalTitles[0]) {
+      icon = vote;
     }
 
     // video submitted
-    else if (title===this.modalTitles[1]){
-      message="Thank you for your submission - You will receive your tailored virtual presence assessment within 24 hours.";
-      icon=video;
+    else if (title === this.modalTitles[1]) {
+      message = "Thank you for your submission - You will receive your tailored virtual presence assessment within 24 hours.";
+      icon = video;
     }
 
     // error
-    else if (title===this.modalTitles[2]){
+    else if (title === this.modalTitles[2]) {
       // is default message?
-      if (message===this.defaultMessage){
-        message="Oops! The payment didn't go through";
+      if (message === this.defaultMessage) {
+        message = "Oops! The payment didn't go through";
       }
-      icon=attention_red;
+      icon = attention_red;
     }
 
     // t&c
-    else if (title===this.modalTitles[3]){
+    else if (title === this.modalTitles[3]) {
       message = "TERMS OF SERVICE\n" +
         "By clicking “Agree & Begin” below, you agree that the following terms and conditions will apply to the Virtual Presence Assessment (the “Service”) provided through www.vpassessment.com (the “Site”) by Choreography for Business, LLC (“Choreography for Business”, “we” or “us”). If you do not agree and accept, without limitation or qualification, these Terms of Service, you must exit the Site immediately and abstain from using the Service.\n" +
-        " <br/>  <br/> By using the Site or Service, you represent and warrant that you are 18 years of age or older.\n "+
+        " <br/>  <br/> By using the Site or Service, you represent and warrant that you are 18 years of age or older.\n " +
         " <br/>  <br/> When you purchase the Service, you will record and submit a short video to Choreography for Business through the Site, and we will provide you with a written Virtual Presence Assessment. We agree that we shall not sell or distribute your video images to any unaffiliated third party for any commercial purpose. By submitting your video through the Site, you grant us the irrevocable and unrestricted right to use and reproduce your video images in connection with the business activities of Choreography for Business and our affiliates, including for internal research, training and the development of new products or services. By using the Service, you release Choreography for Business from any and all claims and liability relating to our use of any video images or other information you submit through the Site, including any claim to profits that may arise from our internal use of said images or information, in accordance with the terms hereof.\n " +
         " <br/>  <br/> THE SITE AND THE SERVICE ARE PROVIDED ON AN “AS IS” BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. CHOREOGRAPHY FOR BUSINESS HEREBY DISCLAIMS ANY AND ALL WARRANTIES RELATING TO THE SITE AND SERVICE OR ANY OTHER MATTER COVERED BY THESE TERMS OF SERVICE, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. CHOREOGRAPHY FOR BUSINESS MAKES NO WARRANTIES OR REPRESENTATIONS AS TO THE ACCURACY, COMPLETENESS, RELIABILITY, OR SECURITY OF ANY CONTENT PROCESSED BY THE SITE OR SERVICE, OR THAT ANY SERVICE OR ITEMS OBTAINED THROUGH THE SITE WILL OTHERWISE MEET YOUR NEEDS OR EXPECTATIONS. THE AGGREGATE LIMIT OF CHOREOGRAPHY FOR BUSINESS’ LIABILITY IN CONNECTION WITH ANY AND ALL CLAIMS ARISING UNDER THESE TERMS OF SERVICE OR OTHERWISE IN CONNECTION WITH THE SITE OR THE SERVICE SHALL BE THE AMOUNT THAT YOU HAVE PAID TO CHOREOGRAPHY FOR BUSINESS FOR THE SERVICE. \n" +
         " <br/>  <br/> Choreography for Business retains the right to terminate its provision of the Service to you for any reason at any time. Provided that such termination is not by reason of your breach of these Terms of Services, you will receive a refund of any amounts you have paid for the Service.\n" +
@@ -665,6 +669,9 @@ class IndexPage extends Component{
       icon=audio_red;
     }
 
+    if (this.state.toggleModalCallback != null){
+      this.state.toggleModalCallback()
+    }
 
     this.setState({
       modal: !this.state.modal,
@@ -672,14 +679,11 @@ class IndexPage extends Component{
       message:message,
       icon:icon,
       modalSize:size,
+      toggleModalCallback:callback
     });
   }
 
-  toggleBrowserModal(){
-    this.setState({
-      browserModal: !this.state.browserModal
-    });
-  }
+
 
   toggleContact(){
     this.setState({

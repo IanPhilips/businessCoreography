@@ -177,6 +177,9 @@ export default class Video extends Component {
 
           <div className={"d-flex justify-content-center align-content-center"}>
             {
+              this.state.isFirefox ?
+            <button onClick={this.advanceStage} className={"text-white btn mt-3 btn-xl mx-auto" }>AGREE & BEGIN</button>
+                :
             <button onClick={()=>{
               this.props.toggleParentModal(this.props.modalTitles[4],
                 "",

@@ -14,7 +14,7 @@ export default function Footer() {
 
           <h4 className={"mb-4 ml-2 text-white"}> Choreography for Business </h4>
           <br/> <br/>
-          <div className={"col-lg-6"}>
+          <div className={"col-lg-6 mt-2"}>
             <p>
               <a  href={"https://choreographyforbusiness.com/cfbprograms"}>PROGRAMS</a>
               <br/>
@@ -31,7 +31,10 @@ export default function Footer() {
               <a href={privacy}>PRIVACY POLICY</a>
             </p>
             </div>
-            <div className={"col-lg-6"}>
+            <div className={"col-lg-6 mt-2"}>
+              <a style={{fontSize:"14px"}} href="mailto:rachel@choreographyforbusiness.com">CONTACT</a>
+              <br/>
+              <br/>
               <p >
                 75 STATE STREET SUITE 100
               <br/>

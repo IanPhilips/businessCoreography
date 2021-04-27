@@ -150,14 +150,14 @@ export default class Video extends Component {
   stepZero(){
     return(
       <div className={"row d-flex justify-content-center align-content-center"}>
-        <div className={"col-12 col-xl-3 text-center"}>
-          <img src={dollars} alt={""} className={"img-fluid mb-5 img-cloud"}/>
-        </div>
-        <div className={"col-6 text-center "}>
+        {/*<div className={"col-12 col-xl-3 text-center"}>*/}
+        {/*  <img src={dollars} alt={""} className={"img-fluid mb-5 img-cloud"}/>*/}
+        {/*</div>*/}
+        <div className={"col-12 text-center "}>
           <h3 className={"mt-5"}> How This Works</h3>
           <br/>
           <br/>
-          <h5 style={{fontSize:20}} className={"mb-5"}>
+          <h5 style={{fontSize:20}} className={"mb-5 mr-5 ml-5"}>
             1.  Select a Prompt
             <br/>
             <br/>
@@ -190,7 +190,7 @@ export default class Video extends Component {
           </div>
 
 
-          <p style={{fontSize:"14px", color:"#818181"}} className={"mb-4"}>
+          <p style={{fontSize:"14px", fontWeight:"bold", color:"#818181"}} className={"mb-4"}>
             Empower your teams with a Virtual Presence Assessment package for your company - <b> </b>
             <a style={{cursor:"pointer", textDecoration:"underline"}}
                href="mailto:rachel@choreographyforbusiness.com"
@@ -199,13 +199,13 @@ export default class Video extends Component {
 
 
         </div>
-        <div className={"col-12 col-xl-3 text-center"}>
-          <a style={{cursor:"pointer", textDecoration:"underline"}}
-             href="mailto:rachel@choreographyforbusiness.com"
-             className={""}>
-            <img src={team} alt={""}  className={"img-fluid mb-5 img-cloud"}/>
-          </a>
-        </div>
+        {/*<div className={"col-12 col-xl-3 text-center"}>*/}
+        {/*  <a style={{cursor:"pointer", textDecoration:"underline"}}*/}
+        {/*     href="mailto:rachel@choreographyforbusiness.com"*/}
+        {/*     className={""}>*/}
+        {/*    <img src={team} alt={""}  className={"img-fluid mb-5 img-cloud"}/>*/}
+        {/*  </a>*/}
+        {/*</div>*/}
       </div>
     )
   }
